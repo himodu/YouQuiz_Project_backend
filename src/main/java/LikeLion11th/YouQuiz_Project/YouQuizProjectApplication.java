@@ -9,5 +9,7 @@ public class YouQuizProjectApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(YouQuizProjectApplication.class, args);
+		int a;
+		int b;
 	}
 }
