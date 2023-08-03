@@ -13,6 +13,14 @@ public class YouQuizProjectApplication {
 
 		int c;
 		int d;
+		int e;
+	}
+
+
+
+
+		int c;
+		int d;
 
 		int a;
 		int b;
