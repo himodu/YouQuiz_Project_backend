@@ -1,12 +1,15 @@
+server:
+  port: 8081
+
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/demo_jpa_schema
-    username: demo_user
-    password: 1234
+    url: jdbc:mysql://127.0.0.1:3306/youquiz_schema
+    username: YouQuiz_user
+    password: 7879
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     show-sql: false
     properties:
       hibernate:
