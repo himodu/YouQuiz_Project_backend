@@ -1,4 +1,4 @@
-package LikeLion11th.YouQuiz_Project.myPage_student.repository;
+package LikeLion11th.YouQuiz_Project.repository;
 
 import org.springframework.stereotype.Repository;
 import java.util.List;

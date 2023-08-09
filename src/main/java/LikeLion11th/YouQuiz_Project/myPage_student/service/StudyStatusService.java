@@ -1,6 +1,6 @@
 package LikeLion11th.YouQuiz_Project.myPage_student.service;
 
-import LikeLion11th.YouQuiz_Project.myPage_student.repository.*;
+import LikeLion11th.YouQuiz_Project.repository.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.stereotype.Service;
@@ -41,11 +41,7 @@ public class StudyStatusService {
 
     public String checkStudyStatus(Long studentId, Long chapId) { // Check Learning Status using studentID & ChapterID
         List<Long> data = answerRepository.checkStudyStatus(studentId, chapId);
-        if (data.isEmpty()) { // Received List is Empty -> NOT Studied
-            return "U";
-        } else { // Received List is NOT Empty -> Studied
-            return "S";
-        }
+        return (data.isEmpty() == true) ? "U" : "S";
     }
 
     public JSONObject findYoutubeURLByStuID(Long studentId) { // Find YoutubeURL using StudentID
