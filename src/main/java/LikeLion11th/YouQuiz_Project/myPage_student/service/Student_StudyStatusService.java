@@ -53,6 +53,7 @@ public class Student_StudyStatusService {
                 chapterObject.put("chap_id", String.valueOf(chapId));
                 chapterObject.put("youtube_url", findURLByChapID(chapId));
                 chapterObject.put("status", checkStudyStatus(studentId, chapId));
+                chapterObject.put("score", (findScore(studentId, chapId).isEmpty()) ? "Not Evaluated" : String.valueOf(findScore(studentId, chapId).get(0)));
                 chapterArray.add(chapterObject);
             }
         }
@@ -75,9 +76,9 @@ public class Student_StudyStatusService {
         return question.get(0);
     }
 
-    public Integer findScore(Long studentId, Long chapId) { // Find Score using StudentID & ChapterID
+    public List<Integer> findScore(Long studentId, Long chapId) { // Find Score using StudentID & ChapterID
         List<Integer> score = answerRepository.findScore(studentId, chapId); // Extracting the Student's Score
-        return score.get(0);
+        return score;
     }
 
     public JSONObject findStudyStatus(Long studentId, Long chapId) { // Find Learning Status of Each Chapter
@@ -88,7 +89,7 @@ public class Student_StudyStatusService {
         chapterObject.put("question", findQuestion(chapId));
         chapterObject.put("answer_sentence", findAnswerSentence(studentId, chapId));
         chapterObject.put("answer_list", findAnswerList(studentId, chapId));
-        chapterObject.put("score", findScore(studentId, chapId));
+        chapterObject.put("score", findScore(studentId, chapId).get(0));
         chapterArray.add(chapterObject);
         returnJSON.put("study_result", chapterArray);
         return returnJSON;
