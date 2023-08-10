@@ -18,4 +18,12 @@ public class JpaClass_ChapterRepository implements Class_ChapterRepository {
                 .getResultList(); // Extracting the data which meets the criterion using SQL Query, and Saving as a list (criterion: ClassID)
         return data;
     }
+
+    @Override
+    public List<Long> CountChapter(Long classId) { // Count the number of Chapter assigned Class using ClassID
+        List<Long> data = em.createQuery("select count(c.chapterEntity.id) from Class_ChapterEntity c where c.classEntity.id = :classId", Long.class)
+                .setParameter("classId", classId)
+                .getResultList();
+        return data;
+    }
 }

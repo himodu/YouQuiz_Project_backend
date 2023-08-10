@@ -26,4 +26,12 @@ public class JpaClass_StudentRepository implements Class_StudentRepository {
                 .getResultList();
         return data;
     }
+
+    @Override
+    public List<Long> CountStudent(Long classId) { // Count the number of Student in Class using ClassID
+        List<Long> data = em.createQuery("select count(c.studentEntity.id) from Class_StudentEntity c where c.classEntity.id = :classId", Long.class)
+                .setParameter("classId", classId)
+                .getResultList();
+        return data;
+    }
 }

@@ -6,4 +6,5 @@ import java.util.List;
 @Repository
 public interface Class_ChapterRepository {
     List<Long> findChapIdByClassId(Long classId); // Find ChapterID using ClassID
+    List<Long> CountChapter(Long classId); // Count the number of Chapter assigned Class using ClassID
 }

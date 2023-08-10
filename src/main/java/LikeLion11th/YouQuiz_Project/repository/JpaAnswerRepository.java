@@ -50,4 +50,13 @@ public class JpaAnswerRepository implements AnswerRepository {
                 .getResultList(); // After Compare studentID & chapterID of saved data, Only if matched, Add Score to Return Data
         return data;
     }
+
+    @Override
+    public List<Long> CountComment(Long studentId, Long chapId) { // Count the number Teacher's Comment using StudentID and ChapterID
+        List<Long> data = em.createQuery("select a.commentEntity.id from AnswerEntity a where a.studentEntity.id = :studentId AND a.chapterEntity.id = :chapId", Long.class)
+                .setParameter("studentId", studentId)
+                .setParameter("chapId", chapId)
+                .getResultList();
+        return data;
+    }
 }

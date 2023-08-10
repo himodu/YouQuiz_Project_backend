@@ -39,7 +39,7 @@ public class Student_StudyStatusService {
 
     public String checkStudyStatus(Long studentId, Long chapId) { // Check Learning Status using studentID & ChapterID
         List<Long> data = answerRepository.checkStudyStatus(studentId, chapId);
-        return (data.isEmpty() == true) ? "U" : "S";
+        return (data.isEmpty() == true) ? "X" : "O";
     }
 
     public JSONObject findYoutubeURLByStuID(Long studentId) { // Find YoutubeURL using StudentID
@@ -56,7 +56,7 @@ public class Student_StudyStatusService {
                 chapterArray.add(chapterObject);
             }
         }
-        returnJSON.put("studyStatus", chapterArray);
+        returnJSON.put("study_status", chapterArray);
         return returnJSON;
     }
 
@@ -90,7 +90,7 @@ public class Student_StudyStatusService {
         chapterObject.put("answer_list", findAnswerList(studentId, chapId));
         chapterObject.put("score", findScore(studentId, chapId));
         chapterArray.add(chapterObject);
-        returnJSON.put("studyResult", chapterArray);
+        returnJSON.put("study_result", chapterArray);
         return returnJSON;
     }
 }

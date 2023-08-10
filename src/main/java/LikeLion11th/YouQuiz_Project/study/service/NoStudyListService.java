@@ -59,7 +59,7 @@ public class NoStudyListService {
                 }
             }
         }
-        returnJSON.put("noStudyList", chapterArray);
+        returnJSON.put("no_study_list", chapterArray);
         return returnJSON;
     }
 }
