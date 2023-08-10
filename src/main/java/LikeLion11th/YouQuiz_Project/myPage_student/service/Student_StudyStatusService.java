@@ -4,19 +4,17 @@ import LikeLion11th.YouQuiz_Project.repository.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
-public class StudyStatusService {
+public class Student_StudyStatusService {
     private final Class_StudentRepository classStudentRepository;
     private final Class_ChapterRepository classChapterRepository;
     private final ChapterRepository chapterRepository;
     private final AnswerRepository answerRepository;
     private final QuizRepository quizRepository;
-
-    public StudyStatusService(Class_StudentRepository classStudentRepository, Class_ChapterRepository classChapterRepository,
-                              ChapterRepository chapterRepository, AnswerRepository answerRepository, QuizRepository quizRepository) {
+    public Student_StudyStatusService(Class_StudentRepository classStudentRepository, Class_ChapterRepository classChapterRepository,
+                                      ChapterRepository chapterRepository, AnswerRepository answerRepository, QuizRepository quizRepository) {
         this.classStudentRepository = classStudentRepository;
         this.classChapterRepository = classChapterRepository;
         this.chapterRepository = chapterRepository;
@@ -25,18 +23,18 @@ public class StudyStatusService {
     }
 
     public List<Long> findClassIdByStuId(Long studentId) { // Find ClassID using StudentID
-        List<Long> LongData = classStudentRepository.findClassIdByStuId(studentId); // Extracting the data which meets the criterion (criterion: StudentID)
-        return LongData;
+        List<Long> classId = classStudentRepository.findClassIdByStuId(studentId); // Extracting the data which meets the criterion (criterion: StudentID)
+        return classId;
     }
 
     public List<Long> findChapIdByClassId(Long classId) { // Find ChapterID using ClassID
-        List<Long> LongData = classChapterRepository.findChapIdByClassId(classId); // Extracting the data which meets the criterion (criterion: ClassID)
-        return LongData;
+        List<Long> chapId = classChapterRepository.findChapIdByClassId(classId); // Extracting the data which meets the criterion (criterion: ClassID)
+        return chapId;
     }
 
     public String findURLByChapID(Long chapId) { // Find YoutubeURL using ChapterID
-        String StringData = chapterRepository.findURLByChapID(chapId); // Extracting the data which meets the criterion (criterion: ChapterID)
-        return StringData;
+        List<String> URL = chapterRepository.findURLByChapID(chapId); // Extracting the data which meets the criterion (criterion: ChapterID)
+        return URL.get(0);
     }
 
     public String checkStudyStatus(Long studentId, Long chapId) { // Check Learning Status using studentID & ChapterID
@@ -63,8 +61,8 @@ public class StudyStatusService {
     }
 
     public String findAnswerSentence (Long studentId, Long chapId) { // Find Answer_Sentence using StudentID & ChapterID
-        String sentence = answerRepository.findAnswerSentence(studentId, chapId); // Extracting the Student's answer_sentence
-        return sentence;
+        List<String> sentence = answerRepository.findAnswerSentence(studentId, chapId); // Extracting the Student's answer_sentence
+        return sentence.get(0);
     }
 
     public List<Integer> findAnswerList (Long studentId, Long chapId) { // Find Answer_List using StudentID & ChapterID
@@ -73,13 +71,13 @@ public class StudyStatusService {
     }
 
     public String findQuestion(Long chapId) { // FInd Question using ChapterID
-        String question = quizRepository.findQuestion(chapId); // Extracting the Question
-        return question;
+        List<String> question = quizRepository.findQuestion(chapId); // Extracting the Question
+        return question.get(0);
     }
 
     public Integer findScore(Long studentId, Long chapId) { // Find Score using StudentID & ChapterID
-        Integer score = answerRepository.findScore(studentId, chapId); // Extracting the Student's Score
-        return score;
+        List<Integer> score = answerRepository.findScore(studentId, chapId); // Extracting the Student's Score
+        return score.get(0);
     }
 
     public JSONObject findStudyStatus(Long studentId, Long chapId) { // Find Learning Status of Each Chapter

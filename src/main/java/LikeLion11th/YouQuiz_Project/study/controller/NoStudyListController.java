@@ -12,7 +12,6 @@ import java.util.Map;
 @Controller
 public class NoStudyListController {
     private final NoStudyListService noStudyListService;
-
     public NoStudyListController(NoStudyListService noStudyListService) {
         this.noStudyListService = noStudyListService;
     }

@@ -4,6 +4,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface Class_ChapterRepository { // Find ChapterID using ClassID
-    List<Long> findChapIdByClassId(Long classId);
+public interface Class_ChapterRepository {
+    List<Long> findChapIdByClassId(Long classId); // Find ChapterID using ClassID
 }

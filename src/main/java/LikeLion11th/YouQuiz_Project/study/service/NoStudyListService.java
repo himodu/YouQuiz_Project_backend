@@ -7,7 +7,6 @@ import LikeLion11th.YouQuiz_Project.repository.Class_StudentRepository;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
@@ -16,7 +15,6 @@ public class NoStudyListService {
     private final ChapterRepository chapterRepository;
     private final Class_ChapterRepository classChapterRepository;
     private final Class_StudentRepository classStudentRepository;
-
     public NoStudyListService (AnswerRepository answerRepository, ChapterRepository chapterRepository, Class_ChapterRepository classChapterRepository, Class_StudentRepository classStudentRepository) {
         this.answerRepository = answerRepository;
         this.chapterRepository = chapterRepository;
@@ -25,18 +23,18 @@ public class NoStudyListService {
     }
 
     public List<Long> findClassIdByStuId(Long studentId) { // Find ClassID using StudentID
-        List<Long> LongData = classStudentRepository.findClassIdByStuId(studentId); // Extracting the data which meets the criterion (criterion: StudentID)
-        return LongData;
+        List<Long> classId = classStudentRepository.findClassIdByStuId(studentId); // Extracting the data which meets the criterion (criterion: StudentID)
+        return classId;
     }
 
     public List<Long> findChapIdByClassId(Long classId) { // Find ChapterID using ClassID
-        List<Long> LongData = classChapterRepository.findChapIdByClassId(classId); // Extracting the data which meets the criterion (criterion: ClassID)
-        return LongData;
+        List<Long> chapId = classChapterRepository.findChapIdByClassId(classId); // Extracting the data which meets the criterion (criterion: ClassID)
+        return chapId;
     }
 
     public String findURLByChapID(Long chapId) { // Find YoutubeURL using ChapterID
-        String StringData = chapterRepository.findURLByChapID(chapId); // Extracting the data which meets the criterion (criterion: ChapterID)
-        return StringData;
+        List<String> URL = chapterRepository.findURLByChapID(chapId); // Extracting the data which meets the criterion (criterion: ChapterID)
+        return URL.get(0);
     }
 
     public String checkStudyStatus(Long studentId, Long chapId) { // Check Learning Status using studentID & ChapterID
@@ -52,7 +50,7 @@ public class NoStudyListService {
             List<Long> ChapData = findChapIdByClassId(classId); // Find ChapterID using ClassID
             for (Long chapId : ChapData) { // Repeat as the times of the number of extracted ChapterID
                 JSONObject chapterObject = new JSONObject(); // Create JSON Data using extracted data (YoutubeLink & ChapterID) from DB
-                if (checkStudyStatus(studentId, chapId) == "U") {
+                if (checkStudyStatus(studentId, chapId) == "U") { // Add ChapterID & YoutubeURL to JSON if ONLY NOT Studied
                     chapterObject.put("chap_id", String.valueOf(chapId));
                     chapterObject.put("youtube_url", findURLByChapID(chapId));
                     chapterArray.add(chapterObject);

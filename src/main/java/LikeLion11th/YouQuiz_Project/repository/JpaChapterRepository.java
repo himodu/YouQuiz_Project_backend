@@ -12,10 +12,10 @@ public class JpaChapterRepository implements ChapterRepository {
     }
 
     @Override
-    public String findURLByChapID(Long chapId) { // Find YoutubeURL using ChapterID
+    public List<String> findURLByChapID(Long chapId) { // Find YoutubeURL using ChapterID
         List<String> data = em.createQuery("select c.youtube_link from ChapterEntity c where c.id = :chapId", String.class)
                 .setParameter("chapId", chapId)
                 .getResultList(); // Extracting the data which meets the criterion using SQL Query, and Saving as a list (criterion: ChapterID)
-        return data.get(0);
+        return data;
     }
 }

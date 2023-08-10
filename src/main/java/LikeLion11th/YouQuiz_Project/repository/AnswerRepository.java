@@ -1,13 +1,12 @@
 package LikeLion11th.YouQuiz_Project.repository;
 
 import org.springframework.stereotype.Repository;
-
 import java.util.List;
 
 @Repository
-public interface AnswerRepository { // Check Status of Chapter Learning
-    List<Long> checkStudyStatus(Long studentId, Long chapId);
-    String findAnswerSentence(Long studentId, Long chapId);
-    List<Integer> findAnswerList(Long studentId, Long chapId);
-    Integer findScore(Long studentId, Long chapId);
+public interface AnswerRepository {
+    List<Long> checkStudyStatus(Long studentId, Long chapId); // Check Status of Chapter Learning
+    List<String> findAnswerSentence(Long studentId, Long chapId); // Find Student's Answer_Sentence using StudentID & ChapterID
+    List<Integer> findAnswerList(Long studentId, Long chapId); // Find Student's Answer_List using StudentID & ChapterID
+    List<Integer> findScore(Long studentId, Long chapId); // Find Student's Score using StudentID & ChapterID
 }

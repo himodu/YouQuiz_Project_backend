@@ -1,14 +1,12 @@
 package LikeLion11th.YouQuiz_Project.repository;
 
 import org.springframework.stereotype.Repository;
-
 import javax.persistence.EntityManager;
 import java.util.List;
 
 @Repository
 public class JpaAnswerRepository implements AnswerRepository {
     private final EntityManager em;
-
     public JpaAnswerRepository(EntityManager em) {
         this.em = em;
     }
@@ -23,16 +21,16 @@ public class JpaAnswerRepository implements AnswerRepository {
     }
 
     @Override
-    public String findAnswerSentence(Long studentId, Long chapId) { // Find Student's Answer_Sentence
+    public List<String> findAnswerSentence(Long studentId, Long chapId) { // Find Student's Answer_Sentence Using StudentID & ChapterID
         List<String> data = em.createQuery("select answer_sentence from AnswerEntity a where a.studentEntity.id = :studentId AND a.chapterEntity.id = :chapId", String.class)
                 .setParameter("studentId", studentId)
                 .setParameter("chapId", chapId)
                 .getResultList(); // After Compare studentID & chapterID of saved data, Only if matched, Add Answer_Sentence to Return Data
-        return data.get(0);
+        return data;
     }
 
     @Override
-    public List<Integer> findAnswerList(Long studentId, Long chapId) {
+    public List<Integer> findAnswerList(Long studentId, Long chapId) { // Find Student's Answer_List Using StudentID & ChapterID
 //        List<Integer> data = new ArrayList<>();
         List<Long> IdData = em.createQuery("select id from AnswerEntity a where a.studentEntity.id = :studentId AND a.chapterEntity.id = :chapId", Long.class)
                 .setParameter("studentId", studentId)
@@ -45,11 +43,11 @@ public class JpaAnswerRepository implements AnswerRepository {
     }
 
     @Override
-    public Integer findScore(Long studentId, Long chapId) {
+    public List<Integer> findScore(Long studentId, Long chapId) { // Find Student's Score Using StudentID & ChapterID
         List<Integer> data = em.createQuery("select score from AnswerEntity a where a.studentEntity.id = :studentId AND a.chapterEntity.id = :chapId", Integer.class)
                 .setParameter("studentId", studentId)
                 .setParameter("chapId", chapId)
                 .getResultList(); // After Compare studentID & chapterID of saved data, Only if matched, Add Score to Return Data
-        return data.get(0);
+        return data;
     }
 }

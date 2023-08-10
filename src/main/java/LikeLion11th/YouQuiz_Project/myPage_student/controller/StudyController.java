@@ -1,19 +1,17 @@
 package LikeLion11th.YouQuiz_Project.myPage_student.controller;
 
-import LikeLion11th.YouQuiz_Project.myPage_student.service.StudyStatusService;
+import LikeLion11th.YouQuiz_Project.myPage_student.service.Student_StudyStatusService;
 import org.json.simple.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import java.util.Map;
 
 @Controller
 public class StudyController {
-    private final StudyStatusService studyStatusService;
-
-    public StudyController(StudyStatusService studyListService) {
+    private final Student_StudyStatusService studyStatusService;
+    public StudyController(Student_StudyStatusService studyListService) {
         this.studyStatusService = studyListService;
     }
 

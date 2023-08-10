@@ -18,4 +18,12 @@ public class JpaClass_StudentRepository implements Class_StudentRepository {
                 .getResultList(); // Extracting the data which meets the criterion using SQL Query, and Saving as a list (criterion: StudentID)
         return data;
     }
+
+    @Override
+    public List<Long> findStuIdByClassId(Long classId) { // Find ALL StudentID using ClassID
+        List<Long> data = em.createQuery("select c.studentEntity.id from Class_StudentEntity c where c.classEntity.id = :classId", Long.class)
+                .setParameter("classId", classId)
+                .getResultList();
+        return data;
+    }
 }
