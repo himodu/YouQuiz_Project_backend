@@ -17,8 +17,8 @@ public class StudyController {
 
     @GetMapping(value = "/student/{student_id}")
     @ResponseBody
-    public JSONObject findYoutubeURLByStuID(@PathVariable Long student_id) { // Find YoutubeLink using StudentID
-        JSONObject result = studyStatusService.findYoutubeURLByStuID(student_id);
+    public JSONObject findStudiedChapByStuID(@PathVariable Long student_id) { // Find YoutubeLink using StudentID
+        JSONObject result = studyStatusService.findStudiedChapByStuID(student_id);
         return result;
     }
 

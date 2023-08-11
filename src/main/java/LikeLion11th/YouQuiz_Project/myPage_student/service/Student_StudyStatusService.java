@@ -42,7 +42,7 @@ public class Student_StudyStatusService {
         return (data.isEmpty() == true) ? "X" : "O";
     }
 
-    public JSONObject findYoutubeURLByStuID(Long studentId) { // Find YoutubeURL using StudentID
+    public JSONObject findStudiedChapByStuID(Long studentId) { // Find Not Studied Chapter using StudentID
         JSONObject returnJSON = new JSONObject();
         JSONArray chapterArray = new JSONArray(); // Create JSON Array using JSON DATA
         List<Long> ClassData = findClassIdByStuId(studentId); // Find ClassID using StudentID
@@ -50,14 +50,17 @@ public class Student_StudyStatusService {
             List<Long> ChapData = findChapIdByClassId(classId); // Find ChapterID using ClassID
             for (Long chapId : ChapData) { // Repeat as the times of the number of extracted ChapterID
                 JSONObject chapterObject = new JSONObject(); // Create JSON Data using extracted data (YoutubeLink & ChapterID) from DB
-                chapterObject.put("chap_id", String.valueOf(chapId));
-                chapterObject.put("youtube_url", findURLByChapID(chapId));
-                chapterObject.put("status", checkStudyStatus(studentId, chapId));
-                chapterObject.put("score", (findScore(studentId, chapId).isEmpty()) ? "Not Evaluated" : String.valueOf(findScore(studentId, chapId).get(0)));
-                chapterArray.add(chapterObject);
+                if (checkStudyStatus(studentId, chapId) == "O") {
+                    chapterObject.put("chap_id", String.valueOf(chapId));
+                    chapterObject.put("youtube_url", findURLByChapID(chapId));
+                    chapterObject.put("score", (findScore(studentId, chapId).isEmpty()) ? "Not Evaluated" : String.valueOf(findScore(studentId, chapId).get(0)));
+                    chapterArray.add(chapterObject);
+                } else {
+                    continue;
+                }
             }
         }
-        returnJSON.put("study_status", chapterArray);
+        returnJSON.put("studied_chapter", chapterArray);
         return returnJSON;
     }
 
