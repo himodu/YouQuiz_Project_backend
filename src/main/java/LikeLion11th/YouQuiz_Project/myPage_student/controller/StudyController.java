@@ -15,14 +15,14 @@ public class StudyController {
         this.studyStatusService = studyListService;
     }
 
-    @GetMapping(value = "/student/{student_id}")
+    @GetMapping(value = "/student/{student_id}/studystatus")
     @ResponseBody
     public JSONObject findStudiedChapByStuID(@PathVariable Long student_id) { // Find YoutubeLink using StudentID
         JSONObject result = studyStatusService.findStudiedChapByStuID(student_id);
         return result;
     }
 
-    @GetMapping(value = "/student/{student_id}/{chapter_id}")
+    @GetMapping(value = "/student/{student_id}/studystatus/{chapter_id}")
     @ResponseBody
     public JSONObject findStudyStatus(@PathVariable Map<String, String> pathVarsMap) { // Find Learning Status of Each Chapter
         Long student_id = Long.parseLong(pathVarsMap.get("student_id"));
