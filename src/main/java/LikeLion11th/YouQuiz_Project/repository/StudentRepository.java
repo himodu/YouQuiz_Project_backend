@@ -5,6 +5,6 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;
 
-public interface StudentRepository1 extends CrudRepository<StudentEntity, Long> {
+public interface StudentRepository extends CrudRepository<StudentEntity, Long> {
     Optional<StudentEntity> findByUserId(String userid);
 }
