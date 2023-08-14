@@ -7,10 +7,10 @@ import LikeLion11th.YouQuiz_Project.entity.TeacherEntity;
 import LikeLion11th.YouQuiz_Project.model.ClassDto;
 import LikeLion11th.YouQuiz_Project.model.StudentDto;
 import LikeLion11th.YouQuiz_Project.model.TeacherDto;
-import LikeLion11th.YouQuiz_Project.repository.ClassRepository;
-import LikeLion11th.YouQuiz_Project.repository.Class_StudentRepository;
-import LikeLion11th.YouQuiz_Project.repository.StudentRepository;
-import LikeLion11th.YouQuiz_Project.repository.TeacherRepository;
+import LikeLion11th.YouQuiz_Project.repository.ClassRepository1;
+import LikeLion11th.YouQuiz_Project.repository.Class_StudentRepository1;
+import LikeLion11th.YouQuiz_Project.repository.StudentRepository1;
+import LikeLion11th.YouQuiz_Project.repository.TeacherRepository1;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -22,27 +22,27 @@ import java.util.Optional;
 
 @Service
 public class RegisterService {
-    private final StudentRepository studentRepository;
-    private final ClassRepository classRepository;
-    private final Class_StudentRepository class_studentRepository;
-    private final TeacherRepository teacherRepository;
+    private final StudentRepository1 studentRepository1;
+    private final ClassRepository1 classRepository1;
+    private final Class_StudentRepository1 class_studentRepository1;
+    private final TeacherRepository1 teacherRepository1;
 
 
     public RegisterService(
-            @Autowired StudentRepository studentRepository,
-            @Autowired ClassRepository classRepository,
-            @Autowired Class_StudentRepository class_studentRepository,
-            @Autowired TeacherRepository teacherRepository) {
-        this.studentRepository = studentRepository;
-        this.classRepository = classRepository;
-        this.class_studentRepository = class_studentRepository;
-        this.teacherRepository = teacherRepository;
+            @Autowired StudentRepository1 studentRepository1,
+            @Autowired ClassRepository1 classRepository1,
+            @Autowired Class_StudentRepository1 class_studentRepository1,
+            @Autowired TeacherRepository1 teacherRepository1) {
+        this.studentRepository1 = studentRepository1;
+        this.classRepository1 = classRepository1;
+        this.class_studentRepository1 = class_studentRepository1;
+        this.teacherRepository1 = teacherRepository1;
     }
 
     public void createStudent(StudentDto studentDto){
         StudentEntity studentEntity = new StudentEntity();
 
-        if(studentRepository.findByUserId(studentDto.getUserId()).isPresent()){
+        if(studentRepository1.findByUserId(studentDto.getUserId()).isPresent()){
             throw new ResponseStatusException(HttpStatus.MULTI_STATUS);
         }
         studentEntity.setUserId(studentDto.getUserId());
@@ -52,9 +52,9 @@ public class RegisterService {
         studentEntity.setSex(studentDto.getSex());
         studentEntity.setPhoneNumber(studentDto.getPhoneNumber());
 
-        this.studentRepository.save(studentEntity);
+        this.studentRepository1.save(studentEntity);
 
-        Optional<ClassEntity> classEntity = this.classRepository.findById(Long.valueOf(studentDto.getClass_id()));
+        Optional<ClassEntity> classEntity = this.classRepository1.findById(Long.valueOf(studentDto.getClass_id()));
         if(classEntity.isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
@@ -62,14 +62,14 @@ public class RegisterService {
         Class_StudentEntity class_studentEntity = new Class_StudentEntity();
         class_studentEntity.setClassEntity(classEntity.get());
         class_studentEntity.setStudentEntity(studentEntity);
-        this.class_studentRepository.save(class_studentEntity);
+        this.class_studentRepository1.save(class_studentEntity);
 
     }
 
     public void createTeacher(TeacherDto teacherDto){
         TeacherEntity teacherEntity = new TeacherEntity();
 
-        if(teacherRepository.findByUserId(teacherDto.getUserId()).isPresent()){
+        if(teacherRepository1.findByUserId(teacherDto.getUserId()).isPresent()){
             throw new ResponseStatusException(HttpStatus.MULTI_STATUS);
         }
         teacherEntity.setUserId(teacherDto.getUserId());
@@ -79,7 +79,7 @@ public class RegisterService {
         teacherEntity.setSex(teacherDto.getSex());
         teacherEntity.setPhoneNumber(teacherDto.getPhoneNumber());
 
-        Optional<ClassEntity> classEntity = this.classRepository.findById(Long.valueOf(teacherDto.getClass_id()));
+        Optional<ClassEntity> classEntity = this.classRepository1.findById(Long.valueOf(teacherDto.getClass_id()));
         if(classEntity.isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
@@ -92,7 +92,7 @@ public class RegisterService {
         teacherEntity.setClassEntityList(classList);
 
         classEntity.get().setTeacherEntity(teacherEntity);
-        this.teacherRepository.save(teacherEntity);
+        this.teacherRepository1.save(teacherEntity);
     }
 
 
@@ -100,7 +100,7 @@ public class RegisterService {
 
         ClassDto New_classdto = new ClassDto();
 
-        Optional<ClassEntity> classEntity = this.classRepository.findByCode(classDto.getCode());
+        Optional<ClassEntity> classEntity = this.classRepository1.findByCode(classDto.getCode());
         if(classEntity.isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
