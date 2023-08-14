@@ -4,8 +4,8 @@ import LikeLion11th.YouQuiz_Project.entity.StudentEntity;
 import LikeLion11th.YouQuiz_Project.entity.TeacherEntity;
 import LikeLion11th.YouQuiz_Project.model.StudentDto;
 import LikeLion11th.YouQuiz_Project.model.TeacherDto;
-import LikeLion11th.YouQuiz_Project.repository.StudentRepository;
-import LikeLion11th.YouQuiz_Project.repository.TeacherRepository;
+import LikeLion11th.YouQuiz_Project.repository.StudentDao;
+import LikeLion11th.YouQuiz_Project.repository.TeacherDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -15,19 +15,19 @@ import java.util.Optional;
 
 @Service
 public class LoginService {
-    private final StudentRepository studentRepository;
-    private final TeacherRepository teacherRepository;
+    private final StudentDao studentDao;
+    private final TeacherDao teacherDao;
 
-    public LoginService(@Autowired StudentRepository studentRepository, @Autowired TeacherRepository teacherRepository) {
+    public LoginService(@Autowired StudentDao studentDao, @Autowired TeacherDao teacherDao) {
 
-        this.studentRepository = studentRepository;
-        this.teacherRepository = teacherRepository;
+        this.studentDao = studentDao;
+        this.teacherDao = teacherDao;
     }
 
     public StudentDto Student_login(StudentDto studentDto){
 
 
-        Optional<StudentEntity> targetStudent = studentRepository.findByUserId(studentDto.getUserId());
+        Optional<StudentEntity> targetStudent = studentDao.findByUserId(studentDto.getUserId());
         if(targetStudent.isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
@@ -45,7 +45,7 @@ public class LoginService {
 
     public TeacherDto Teacher_login(TeacherDto teacherDto){
 
-        Optional<TeacherEntity> targetTeacher = this.teacherRepository.findByUserId(teacherDto.getUserId());
+        Optional<TeacherEntity> targetTeacher = this.teacherDao.findByUserId(teacherDto.getUserId());
         if(targetTeacher.isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
