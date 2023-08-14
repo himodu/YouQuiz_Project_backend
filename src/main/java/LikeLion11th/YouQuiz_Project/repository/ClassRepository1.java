@@ -5,7 +5,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;
 
-public interface ClassRepository extends CrudRepository<ClassEntity, Long> {
+public interface ClassRepository1 extends CrudRepository<ClassEntity, Long> {
 
     Optional<ClassEntity> findByCode(String code);
 
