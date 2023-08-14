@@ -108,7 +108,7 @@ public class RegisterService {
         int id = classEntity.get().getId().intValue();
 
         New_classdto.setId(id);
-        New_classdto.setCode(classEntity.get().getClass_code());
+        New_classdto.setCode(classEntity.get().getCode());
         New_classdto.setSchool_name(classEntity.get().getSchool_name());
         New_classdto.setGrade(classEntity.get().getGrade());
         New_classdto.setClass_num(classEntity.get().getClass_num());
