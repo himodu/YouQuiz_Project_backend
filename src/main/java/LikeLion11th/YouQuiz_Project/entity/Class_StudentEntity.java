@@ -15,8 +15,7 @@ public class Class_StudentEntity extends BaseEntity
     @JsonIgnore
     @ManyToOne(
             targetEntity = StudentEntity.class,
-            fetch = FetchType.LAZY,
-            cascade = CascadeType.PERSIST
+            fetch = FetchType.LAZY
     )
     @JoinColumn(name = "STUDENT_ID")
     private StudentEntity studentEntity;

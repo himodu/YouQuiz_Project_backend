@@ -43,46 +43,4 @@ public class ChapterEntity {
         this.id = id;
     }
 
-    public List<Integer> getCorrect_answerList() {
-        return correct_answerList;
-    }
-
-    public void setCorrect_answerList(List<Integer> correct_answerList) {
-        this.correct_answerList = correct_answerList;
-    }
-
-    public String getYoutube_link() {
-        return youtube_link;
-    }
-
-    public void setYoutube_link(String youtube_link) {
-        this.youtube_link = youtube_link;
-    }
-
-    public List<Class_ChapterEntity> getClass_ChapterEntityList() {
-        return class_ChapterEntityList;
-    }
-
-    public void setClass_ChapterEntityList(List<Class_ChapterEntity> class_ChapterEntityList) {
-        this.class_ChapterEntityList = class_ChapterEntityList;
-    }
-
-    public List<QuizEntity> getQuizEntityList() {
-        return quizEntityList;
-    }
-
-    public void setQuizEntityList(List<QuizEntity> quizEntityList) {
-        this.quizEntityList = quizEntityList;
-    }
-
-    @Override
-    public String toString() {
-        return "ChapterEntity{" +
-                "id=" + id +
-                ", correct_answerList=" + correct_answerList +
-                ", youtube_link='" + youtube_link + '\'' +
-                ", class_ChapterEntityList=" + class_ChapterEntityList +
-                ", quizEntityList=" + quizEntityList +
-                '}';
-    }
 }
