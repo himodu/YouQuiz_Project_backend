@@ -4,6 +4,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface StudentRepository { // Find UserName using StudentID
-    List<String> findUserNameByStuId(Long studentId);
+public interface QuizRepository { // Find Question Sentence using ChapterID
+    List<String> findQuestion(Long chapId);
 }
