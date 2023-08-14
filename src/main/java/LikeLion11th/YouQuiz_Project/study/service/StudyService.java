@@ -5,9 +5,9 @@ import LikeLion11th.YouQuiz_Project.entity.ChapterEntity;
 import LikeLion11th.YouQuiz_Project.entity.StudentEntity;
 import LikeLion11th.YouQuiz_Project.model.AnswerDto;
 import LikeLion11th.YouQuiz_Project.model.ChapterDto;
-import LikeLion11th.YouQuiz_Project.repository.AnswerDao;
-import LikeLion11th.YouQuiz_Project.repository.ChapterDao;
-import LikeLion11th.YouQuiz_Project.repository.StudentDao;
+import LikeLion11th.YouQuiz_Project.repository.AnswerRepository;
+import LikeLion11th.YouQuiz_Project.repository.ChapterRepository;
+import LikeLion11th.YouQuiz_Project.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -18,26 +18,26 @@ import java.util.Optional;
 
 @Service
 public class StudyService {
-    private final AnswerDao answerDao;
-    private final StudentDao studentDao;
-    private final ChapterDao chapterDao;
+    private final AnswerRepository answerRepository;
+    private final StudentRepository studentRepository;
+    private final ChapterRepository chapterRepository;
 
 
-    public StudyService(@Autowired AnswerDao answerDao, @Autowired StudentDao studentDao, @Autowired ChapterDao chapterDao) {
-        this.answerDao = answerDao;
-        this.studentDao = studentDao;
-        this.chapterDao = chapterDao;
+    public StudyService(@Autowired AnswerRepository answerRepository, @Autowired StudentRepository studentRepository, @Autowired ChapterRepository chapterRepository) {
+        this.answerRepository = answerRepository;
+        this.studentRepository = studentRepository;
+        this.chapterRepository = chapterRepository;
     }
 
     public void createAnswer(AnswerDto answerDto, int student_id, int chapter_id){
         AnswerEntity answerEntity = new AnswerEntity();
 
 
-        Optional<ChapterEntity> chapterEntity = chapterDao.findById(Long.valueOf(chapter_id));
+        Optional<ChapterEntity> chapterEntity = chapterRepository.findById(Long.valueOf(chapter_id));
         if(chapterEntity.isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
-        Optional<StudentEntity> studentEntity = studentDao.findById(Long.valueOf(student_id));
+        Optional<StudentEntity> studentEntity = studentRepository.findById(Long.valueOf(student_id));
         if(studentEntity.isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
@@ -60,7 +60,7 @@ public class StudyService {
         answerEntity.setStudentEntity(studentEntity.get());
         answerEntity.setCommentEntity(null);
 
-        answerDao.save(answerEntity);
+        answerRepository.save(answerEntity);
 
     }
 
@@ -68,7 +68,7 @@ public class StudyService {
 
         ChapterDto chapterDto = new ChapterDto();
 
-        Optional<ChapterEntity> chapterEntity  = this.chapterDao.findById(Long.valueOf(chap_id));
+        Optional<ChapterEntity> chapterEntity  = this.chapterRepository.findById(Long.valueOf(chap_id));
         if(chapterEntity.isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }

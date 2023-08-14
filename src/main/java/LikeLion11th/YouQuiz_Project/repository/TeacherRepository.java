@@ -5,6 +5,6 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;
 
-public interface TeacherDao extends CrudRepository<TeacherEntity, Long> {
+public interface TeacherRepository extends CrudRepository<TeacherEntity, Long> {
     Optional<TeacherEntity> findByUserId(String userid);
 }
