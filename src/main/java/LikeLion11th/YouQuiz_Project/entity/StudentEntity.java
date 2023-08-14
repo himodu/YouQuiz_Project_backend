@@ -25,7 +25,8 @@ public class StudentEntity extends BaseEntity{
     @OneToMany(
             targetEntity = Class_StudentEntity.class,
             mappedBy = "studentEntity",
-            fetch = FetchType.LAZY
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.PERSIST
     )
     private List<Class_StudentEntity> class_studentList = new ArrayList<>();
 

@@ -1,9 +1,7 @@
 package LikeLion11th.YouQuiz_Project.repository;
 
-import org.springframework.stereotype.Repository;
-import java.util.List;
+import LikeLion11th.YouQuiz_Project.entity.ChapterEntity;
+import org.springframework.data.repository.CrudRepository;
 
-@Repository
-public interface ChapterRepository {
-    List<String> findURLByChapID(Long chapId); // Find YoutubeURL using ChapterID
+public interface ChapterRepository extends CrudRepository<ChapterEntity, Long> {
 }

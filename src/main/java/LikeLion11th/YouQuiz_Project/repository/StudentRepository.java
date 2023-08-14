@@ -1,9 +1,10 @@
 package LikeLion11th.YouQuiz_Project.repository;
 
-import org.springframework.stereotype.Repository;
-import java.util.List;
+import LikeLion11th.YouQuiz_Project.entity.StudentEntity;
+import org.springframework.data.repository.CrudRepository;
 
-@Repository
-public interface StudentRepository { // Find UserName using StudentID
-    List<String> findUserNameByStuId(Long studentId);
+import java.util.Optional;
+
+public interface StudentRepository extends CrudRepository<StudentEntity, Long> {
+    Optional<StudentEntity> findByUserId(String userid);
 }
