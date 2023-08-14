@@ -92,6 +92,8 @@ public class ClassEntity extends BaseEntity{
         this.id = id;
     }
 
+
+
     public List<Class_StudentEntity> getClass_StudentEntityList() {
         return class_StudentEntityList;
     }

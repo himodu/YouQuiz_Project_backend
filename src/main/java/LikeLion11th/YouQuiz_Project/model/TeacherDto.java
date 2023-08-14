@@ -1,19 +1,7 @@
-package LikeLion11th.YouQuiz_Project.entity;
+package LikeLion11th.YouQuiz_Project.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
-
-@Entity
-@Table(name= "student")
-public class StudentEntity extends BaseEntity{
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+public class TeacherDto {
+    private int id;
     private String userId;
     private String password;
     private String username;
@@ -21,23 +9,15 @@ public class StudentEntity extends BaseEntity{
     private String sex;
     private String phoneNumber;
 
-    @JsonIgnore
-    @OneToMany(
-            targetEntity = Class_StudentEntity.class,
-            mappedBy = "studentEntity",
-            fetch = FetchType.LAZY,
-            cascade = CascadeType.PERSIST
-    )
-    private List<Class_StudentEntity> class_studentList = new ArrayList<>();
+    private int class_id;
 
-    @JsonIgnore
-    @OneToMany(
-            targetEntity = AnswerEntity.class,
-            mappedBy = "studentEntity",
-            fetch = FetchType.LAZY
-    )
-    private List<AnswerEntity> answerList = new ArrayList<>();
+    public int getId() {
+        return id;
+    }
 
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getUserId() {
         return userId;
@@ -87,25 +67,17 @@ public class StudentEntity extends BaseEntity{
         this.phoneNumber = phoneNumber;
     }
 
-    public List<Class_StudentEntity> getClass_student() {
-        return class_studentList;
+    public int getClass_id() {
+        return class_id;
     }
 
-    public void setClass_student(List<Class_StudentEntity> class_student) {
-        this.class_studentList = class_student;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    public void setClass_id(int class_id) {
+        this.class_id = class_id;
     }
 
     @Override
     public String toString() {
-        return "StudentEntity{" +
+        return "TeacherDto{" +
                 "id=" + id +
                 ", userId='" + userId + '\'' +
                 ", password='" + password + '\'' +
@@ -113,7 +85,7 @@ public class StudentEntity extends BaseEntity{
                 ", birth='" + birth + '\'' +
                 ", sex='" + sex + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
-                ", class_student=" + class_studentList +
+                ", class_id=" + class_id +
                 '}';
     }
 }

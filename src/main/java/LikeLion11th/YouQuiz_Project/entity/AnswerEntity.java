@@ -10,6 +10,7 @@ import java.util.List;
 @Table(name = "answer")
 public class AnswerEntity extends BaseEntity{
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -50,13 +51,13 @@ public class AnswerEntity extends BaseEntity{
         this.id = id;
     }
 
-//    public List<Integer> getAnswersList() {
-//        return answersList;
-//    }
-//
-//    public void setAnswersList(List<Integer> answersList) {
-//        this.answersList = answersList;
-//    }
+    public List<Integer> getAnswersList() {
+        return answersList;
+    }
+
+    public void setAnswersList(List<Integer> answersList) {
+        this.answersList = answersList;
+    }
 
     public String getAnswer_sentence() {
         return answer_sentence;
@@ -74,13 +75,13 @@ public class AnswerEntity extends BaseEntity{
         this.score = score;
     }
 
-//    public ChapterEntity getChapterEntity() {
-//        return chapterEntity;
-//    }
-//
-//    public void setChapterEntity(ChapterEntity chapterEntity) {
-//        this.chapterEntity = chapterEntity;
-//    }
+    public ChapterEntity getChapterEntity() {
+        return chapterEntity;
+    }
+
+    public void setChapterEntity(ChapterEntity chapterEntity) {
+        this.chapterEntity = chapterEntity;
+    }
 
     public StudentEntity getStudentEntity() {
         return studentEntity;
@@ -90,15 +91,23 @@ public class AnswerEntity extends BaseEntity{
         this.studentEntity = studentEntity;
     }
 
-//    @Override
-//    public String toString() {
-//        return "AnswerEntity{" +
-//                "id=" + id +
-//                ", answersList=" + answersList +
-//                ", answer_sentence='" + answer_sentence + '\'' +
-//                ", score=" + score +
-//                ", chapterEntity=" + chapterEntity +
-//                ", studentEntity=" + studentEntity +
-//                '}';
-//    }
+    @Override
+    public String toString() {
+        return "AnswerEntity{" +
+                "id=" + id +
+                ", answersList=" + answersList +
+                ", answer_sentence='" + answer_sentence + '\'' +
+                ", score=" + score +
+                ", chapterEntity=" + chapterEntity +
+                ", studentEntity=" + studentEntity +
+                '}';
+    }
+
+    public CommentEntity getCommentEntity() {
+        return commentEntity;
+    }
+
+    public void setCommentEntity(CommentEntity commentEntity) {
+        this.commentEntity = commentEntity;
+    }
 }
