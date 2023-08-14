@@ -2,8 +2,10 @@ package LikeLion11th.YouQuiz_Project.study.service;
 
 import LikeLion11th.YouQuiz_Project.entity.AnswerEntity;
 import LikeLion11th.YouQuiz_Project.entity.ChapterEntity;
+import LikeLion11th.YouQuiz_Project.entity.QuizEntity;
 import LikeLion11th.YouQuiz_Project.entity.StudentEntity;
 import LikeLion11th.YouQuiz_Project.model.AnswerDto;
+import LikeLion11th.YouQuiz_Project.model.ChapterDto;
 import LikeLion11th.YouQuiz_Project.repository.AnswerRepository;
 import LikeLion11th.YouQuiz_Project.repository.ChapterRepository;
 import LikeLion11th.YouQuiz_Project.repository.StudentRepository;
@@ -12,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,6 +23,7 @@ public class StudyService {
     private final AnswerRepository answerRepository;
     private final StudentRepository studentRepository;
     private final ChapterRepository chapterRepository;
+
 
     public StudyService(@Autowired AnswerRepository answerRepository, @Autowired StudentRepository studentRepository, @Autowired ChapterRepository chapterRepository) {
         this.answerRepository = answerRepository;
@@ -59,6 +63,24 @@ public class StudyService {
         answerEntity.setCommentEntity(null);
 
         answerRepository.save(answerEntity);
+
+    }
+
+    public ChapterDto readChapter(int chap_id){
+
+        ChapterDto chapterDto = new ChapterDto();
+
+        Optional<ChapterEntity> chapterEntity  = this.chapterRepository.findById(Long.valueOf(chap_id));
+        if(chapterEntity.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+
+        chapterDto.setYoutube_link(chapterEntity.get().getYoutube_link());
+        chapterDto.setCorrect_answerList(chapterEntity.get().getCorrect_answerList());
+        chapterDto.setQuizEntityList(chapterEntity.get().getQuizEntityList());
+
+
+        return chapterDto;
 
     }
 

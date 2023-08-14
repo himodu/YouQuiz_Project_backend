@@ -14,6 +14,16 @@ public class QuizEntity {
     private Long id;
 
     private String question;
+    private String writer;
+    private String comment;
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
 
     @ElementCollection
     @CollectionTable(name="EXAMPLE_LIST", joinColumns =  @JoinColumn(name="quiz_id", referencedColumnName = "id"))
@@ -57,6 +67,14 @@ public class QuizEntity {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getWriter() {
+        return writer;
+    }
+
+    public void setWriter(String writer) {
+        this.writer = writer;
     }
 
     @Override
