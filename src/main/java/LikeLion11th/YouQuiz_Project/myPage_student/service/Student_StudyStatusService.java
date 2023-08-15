@@ -1,6 +1,7 @@
 package LikeLion11th.YouQuiz_Project.myPage_student.service;
 
 import LikeLion11th.YouQuiz_Project.repository.*;
+import org.apache.juli.logging.Log;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.stereotype.Service;
@@ -69,8 +70,8 @@ public class Student_StudyStatusService {
         return sentence.get(0);
     }
 
-    public List<Integer> findAnswerList (Long studentId, Long chapId) { // Find Answer_List using StudentID & ChapterID
-        List<Integer> answerlist = answerRepository.findAnswerList(studentId, chapId); // Extracting the Student's Answer_List
+    public List<Integer> findStuAnswerList (Long studentId, Long chapId) { // Find Answer_List using StudentID & ChapterID
+        List<Integer> answerlist = answerRepository.findStuAnswerList(studentId, chapId); // Extracting the Student's Answer_List
         return answerlist;
     }
 
@@ -84,6 +85,17 @@ public class Student_StudyStatusService {
         return score;
     }
 
+    public List<Integer> findAnswerListByChapID(Long chapId) { // Find Answer List using ChapterID
+        List<Integer> answer = chapterRepository.findAnswerListByChapID(chapId); // Extracting the Answer-List
+        return answer;
+    }
+
+    public List<String> findMultipleChoiceByChapID(Long chapId) { // Find MultipleChoice (1~5) using ChapterID
+        List<Long> quizId = quizRepository.findQuizIdByChapId(chapId);
+        List<String> choice = quizRepository.findMultipleChoiceByQuizId(quizId.get(0));
+        return choice;
+    }
+
     public JSONObject findStudyStatus(Long studentId, Long chapId) { // Find Learning Status of Each Chapter
         JSONObject returnJSON = new JSONObject();
         JSONArray chapterArray = new JSONArray(); // Create JSON Array using JSON DATA
@@ -91,8 +103,10 @@ public class Student_StudyStatusService {
         chapterObject.put("youtube_url", findURLByChapID(chapId));
         chapterObject.put("question", findQuestion(chapId));
         chapterObject.put("answer_sentence", findAnswerSentence(studentId, chapId));
-        chapterObject.put("answer_list", findAnswerList(studentId, chapId));
+        chapterObject.put("student_answer_list", findStuAnswerList(studentId, chapId));
         chapterObject.put("score", findScore(studentId, chapId).get(0));
+        chapterObject.put("answer_list", findAnswerListByChapID(chapId));
+        chapterObject.put("choice", findMultipleChoiceByChapID(chapId));
         chapterArray.add(chapterObject);
         returnJSON.put("study_result", chapterArray);
         return returnJSON;

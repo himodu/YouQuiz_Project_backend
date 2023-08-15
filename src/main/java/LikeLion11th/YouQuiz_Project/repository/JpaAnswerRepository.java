@@ -30,8 +30,7 @@ public class JpaAnswerRepository implements AnswerRepository {
     }
 
     @Override
-    public List<Integer> findAnswerList(Long studentId, Long chapId) { // Find Student's Answer_List Using StudentID & ChapterID
-//        List<Integer> data = new ArrayList<>();
+    public List<Integer> findStuAnswerList(Long studentId, Long chapId) { // Find Student's Answer_List Using StudentID & ChapterID
         List<Long> IdData = em.createQuery("select id from AnswerEntity a where a.studentEntity.id = :studentId AND a.chapterEntity.id = :chapId", Long.class)
                 .setParameter("studentId", studentId)
                 .setParameter("chapId", chapId)
