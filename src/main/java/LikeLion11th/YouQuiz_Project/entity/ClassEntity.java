@@ -16,7 +16,7 @@ public class ClassEntity extends BaseEntity{
     private String school_name;
     private int grade;
     private int class_num;
-    private String class_code;
+    private String code;
 
     @JsonIgnore
     @ManyToOne(
@@ -66,12 +66,12 @@ public class ClassEntity extends BaseEntity{
         this.class_num = class_num;
     }
 
-    public String getClass_code() {
-        return class_code;
+    public String getCode() {
+        return code;
     }
 
-    public void setClass_code(String class_code) {
-        this.class_code = class_code;
+    public void setCode(String class_code) {
+        this.code = class_code;
     }
 
     public TeacherEntity getTeacherEntity() {
@@ -91,6 +91,8 @@ public class ClassEntity extends BaseEntity{
     public void setId(Long id) {
         this.id = id;
     }
+
+
 
     public List<Class_StudentEntity> getClass_StudentEntityList() {
         return class_StudentEntityList;
@@ -115,7 +117,7 @@ public class ClassEntity extends BaseEntity{
                 ", school_name='" + school_name + '\'' +
                 ", grade=" + grade +
                 ", class_num=" + class_num +
-                ", class_code='" + class_code + '\'' +
+                ", class_code='" + code + '\'' +
                 ", teacherEntity=" + teacherEntity +
                 ", class_chapterEntityList=" + class_chapterEntityList +
                 ", class_StudentEntityList=" + class_StudentEntityList +

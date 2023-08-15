@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.Map;
 
 @Controller
-public class StudyController {
+public class StudyStatusController {
     private final Student_StudyStatusService studyStatusService;
-    public StudyController(Student_StudyStatusService studyListService) {
+    public StudyStatusController(Student_StudyStatusService studyListService) {
         this.studyStatusService = studyListService;
     }
 
@@ -29,5 +29,4 @@ public class StudyController {
         Long chapter_id = Long.parseLong(pathVarsMap.get("chapter_id"));
         JSONObject result = studyStatusService.findStudyStatus(student_id, chapter_id);
         return result;
-    }
-}
+    }}
