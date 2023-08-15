@@ -52,7 +52,7 @@ public class NoStudyListService {
                 JSONObject chapterObject = new JSONObject(); // Create JSON Data using extracted data (YoutubeLink & ChapterID) from DB
                 if (checkStudyStatus(studentId, chapId) == "U") { // Add ChapterID & YoutubeURL to JSON if ONLY NOT Studied
                     chapterObject.put("chap_id", String.valueOf(chapId));
-                    chapterObject.put("youtube_url", findURLByChapID(chapId));
+                    chapterObject.put("youtube_link", findURLByChapID(chapId));
                     chapterArray.add(chapterObject);
                 } else {
                     continue;

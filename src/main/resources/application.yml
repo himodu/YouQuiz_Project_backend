@@ -5,7 +5,7 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://db-i2rbb.pub-cdb.ntruss.com:3306/youquiz
-    username: test1
+    username: youquizbackend
     password: da7879!!!
   jpa:
     hibernate:
