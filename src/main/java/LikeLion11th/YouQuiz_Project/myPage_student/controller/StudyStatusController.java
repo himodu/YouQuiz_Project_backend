@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.Map;
 
 @Controller
-public class StudyController {
+public class StudyStatusController {
     private final Student_StudyStatusService studyStatusService;
-    public StudyController(Student_StudyStatusService studyListService) {
+    public StudyStatusController(Student_StudyStatusService studyListService) {
         this.studyStatusService = studyListService;
     }
 
@@ -24,10 +24,11 @@ public class StudyController {
 
     @GetMapping(value = "/student/{student_id}/studystatus/{chapter_id}")
     @ResponseBody
-    public JSONObject findStudyStatus(@PathVariable Map<String, String> pathVarsMap) { // Find Learning Status of Each Chapter
-        Long student_id = Long.parseLong(pathVarsMap.get("student_id"));
-        Long chapter_id = Long.parseLong(pathVarsMap.get("chapter_id"));
-        JSONObject result = studyStatusService.findStudyStatus(student_id, chapter_id);
+    public JSONObject findStudyStatus(
+            @PathVariable("student_id") int studentId,
+            @PathVariable("chapter_id") int chapterId
+            ) { // Find Learning Status of Each Chapter
+
+        JSONObject result = studyStatusService.findStudyStatus(studentId, chapterId);
         return result;
-    }
-}
+    }}

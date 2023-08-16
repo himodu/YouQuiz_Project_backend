@@ -1,5 +1,6 @@
 package LikeLion11th.YouQuiz_Project.repository;
 
+import LikeLion11th.YouQuiz_Project.entity.AnswerEntity;
 import org.springframework.stereotype.Repository;
 import java.util.List;
 

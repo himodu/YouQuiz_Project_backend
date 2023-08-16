@@ -25,7 +25,8 @@ public class StudentEntity extends BaseEntity{
     @OneToMany(
             targetEntity = Class_StudentEntity.class,
             mappedBy = "studentEntity",
-            fetch = FetchType.LAZY
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.PERSIST
     )
     private List<Class_StudentEntity> class_studentList = new ArrayList<>();
 
@@ -86,13 +87,13 @@ public class StudentEntity extends BaseEntity{
         this.phoneNumber = phoneNumber;
     }
 
-//    public List<Class_StudentEntity> getClass_student() {
-//        return class_studentList;
-//    }
-//
-//    public void setClass_student(List<Class_StudentEntity> class_student) {
-//        this.class_studentList = class_student;
-//    }
+    public List<Class_StudentEntity> getClass_student() {
+        return class_studentList;
+    }
+
+    public void setClass_student(List<Class_StudentEntity> class_student) {
+        this.class_studentList = class_student;
+    }
 
     public Long getId() {
         return id;
@@ -102,17 +103,33 @@ public class StudentEntity extends BaseEntity{
         this.id = id;
     }
 
-//    @Override
-//    public String toString() {
-//        return "StudentEntity{" +
-//                "id=" + id +
-//                ", userId='" + userId + '\'' +
-//                ", password='" + password + '\'' +
-//                ", username='" + username + '\'' +
-//                ", birth='" + birth + '\'' +
-//                ", sex='" + sex + '\'' +
-//                ", phoneNumber='" + phoneNumber + '\'' +
-//                ", class_student=" + class_studentList +
-//                '}';
-//    }
+    public List<Class_StudentEntity> getClass_studentList() {
+        return class_studentList;
+    }
+
+    public void setClass_studentList(List<Class_StudentEntity> class_studentList) {
+        this.class_studentList = class_studentList;
+    }
+
+    public List<AnswerEntity> getAnswerList() {
+        return answerList;
+    }
+
+    public void setAnswerList(List<AnswerEntity> answerList) {
+        this.answerList = answerList;
+    }
+
+    @Override
+    public String toString() {
+        return "StudentEntity{" +
+                "id=" + id +
+                ", userId='" + userId + '\'' +
+                ", password='" + password + '\'' +
+                ", username='" + username + '\'' +
+                ", birth='" + birth + '\'' +
+                ", sex='" + sex + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", class_student=" + class_studentList +
+                '}';
+    }
 }

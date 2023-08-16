@@ -1,7 +1,9 @@
 package LikeLion11th.YouQuiz_Project.myPage_student.service;
 
+import LikeLion11th.YouQuiz_Project.entity.AnswerEntity;
+import LikeLion11th.YouQuiz_Project.model.ChapterDto;
 import LikeLion11th.YouQuiz_Project.repository.*;
-import org.apache.juli.logging.Log;
+import LikeLion11th.YouQuiz_Project.study.service.StudyService;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.stereotype.Service;
@@ -13,14 +15,20 @@ public class Student_StudyStatusService {
     private final Class_ChapterRepository classChapterRepository;
     private final ChapterRepository chapterRepository;
     private final AnswerRepository answerRepository;
+    private final AnswerRepository1 answerRepository1;
     private final QuizRepository quizRepository;
+
+    private final StudyService studyService;
+
     public Student_StudyStatusService(Class_StudentRepository classStudentRepository, Class_ChapterRepository classChapterRepository,
-                                      ChapterRepository chapterRepository, AnswerRepository answerRepository, QuizRepository quizRepository) {
+                                      ChapterRepository chapterRepository, AnswerRepository answerRepository, QuizRepository quizRepository, StudyService studyService,AnswerRepository1 answerRepository1) {
         this.classStudentRepository = classStudentRepository;
         this.classChapterRepository = classChapterRepository;
         this.chapterRepository = chapterRepository;
         this.answerRepository = answerRepository;
         this.quizRepository = quizRepository;
+        this.studyService = studyService;
+        this.answerRepository1 = answerRepository1;
     }
 
     public List<Long> findClassIdByStuId(Long studentId) { // Find ClassID using StudentID
@@ -85,30 +93,23 @@ public class Student_StudyStatusService {
         return score;
     }
 
-    public List<Integer> findAnswerListByChapID(Long chapId) { // Find Answer List using ChapterID
-        List<Integer> answer = chapterRepository.findAnswerListByChapID(chapId); // Extracting the Answer-List
-        return answer;
-    }
+    public JSONObject findStudyStatus(int studentId, int chapId) { // Find Learning Status of Each Chapter
+          JSONObject returnJSON = new JSONObject();
 
-    public List<String> findMultipleChoiceByChapID(Long chapId) { // Find MultipleChoice (1~5) using ChapterID
-        List<Long> quizId = quizRepository.findQuizIdByChapId(chapId);
-        List<String> choice = quizRepository.findMultipleChoiceByQuizId(quizId.get(0));
-        return choice;
-    }
+          AnswerEntity answerEntity = answerRepository1.findByChapterEntityAndStudentEntity(Long.valueOf(chapId), Long.valueOf(studentId));
+          JSONArray answerList = new JSONArray();
 
-    public JSONObject findStudyStatus(Long studentId, Long chapId) { // Find Learning Status of Each Chapter
-        JSONObject returnJSON = new JSONObject();
-        JSONArray chapterArray = new JSONArray(); // Create JSON Array using JSON DATA
-        JSONObject chapterObject = new JSONObject(); // Create JSON Data using extracted data (YoutubeLink & ChapterID) from DB
-        chapterObject.put("youtube_url", findURLByChapID(chapId));
-        chapterObject.put("question", findQuestion(chapId));
-        chapterObject.put("answer_sentence", findAnswerSentence(studentId, chapId));
-        chapterObject.put("student_answer_list", findStuAnswerList(studentId, chapId));
-        chapterObject.put("score", findScore(studentId, chapId).get(0));
-        chapterObject.put("answer_list", findAnswerListByChapID(chapId));
-        chapterObject.put("choice", findMultipleChoiceByChapID(chapId));
-        chapterArray.add(chapterObject);
-        returnJSON.put("study_result", chapterArray);
+          returnJSON.put("student_answer_list",answerEntity.getAnswersList());
+          returnJSON.put("answer_sentence", answerEntity.getAnswer_sentence());
+          returnJSON.put("score",  answerEntity.getScore());
+
+        ChapterDto chapterDto = studyService.readChapter(chapId);
+
+        returnJSON.put("title", chapterDto.getTitle());
+        returnJSON.put("correct_answerList", chapterDto.getCorrect_answerList());
+        returnJSON.put("youtube_link", chapterDto.getYoutube_link());
+        returnJSON.put("quizEntityList", chapterDto.getQuizEntityList());
+
         return returnJSON;
     }
 }

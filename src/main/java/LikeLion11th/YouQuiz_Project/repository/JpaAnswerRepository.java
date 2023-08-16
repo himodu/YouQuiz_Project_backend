@@ -1,5 +1,6 @@
 package LikeLion11th.YouQuiz_Project.repository;
 
+import LikeLion11th.YouQuiz_Project.entity.AnswerEntity;
 import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -19,6 +20,8 @@ public class JpaAnswerRepository implements AnswerRepository {
                 .getResultList(); // After Compare studentID & chapterID of saved data, Only if matched, Add answer's ID to Return Data
         return data;
     }
+
+
 
     @Override
     public List<String> findAnswerSentence(Long studentId, Long chapId) { // Find Student's Answer_Sentence Using StudentID & ChapterID
