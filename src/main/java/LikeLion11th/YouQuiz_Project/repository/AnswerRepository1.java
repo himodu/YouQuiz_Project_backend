@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 public interface AnswerRepository1 extends CrudRepository<AnswerEntity, Long> {
 
     @Query(
-            value = "select * from Answer a where chapter_id = :chapterId AND student_id = :studentId"
+            value = "select * from answer a where chapter_id = :chapterId AND student_id = :studentId"
             , nativeQuery = true
     )
     AnswerEntity findByChapterEntityAndStudentEntity(@Param("chapterId") Long chapid, @Param("studentId") Long studentid);
