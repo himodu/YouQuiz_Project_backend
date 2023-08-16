@@ -49,7 +49,7 @@ public class StudyService {
 
         for(int i=0; i< c_answersList.size(); i++){
             if(c_answersList.get(i) == answersList.get(i)){
-                score += 1;
+                score += 20;
             }
         }
 
