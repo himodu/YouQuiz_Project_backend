@@ -18,4 +18,20 @@ public class JpaQuizRepository implements QuizRepository {
                 .getResultList();
         return data;
     }
+
+    @Override
+    public List<Long> findQuizIdByChapId(Long chapId) { // Find QuizID using ChapterID
+        List<Long> data = em.createQuery("select q.id from QuizEntity q where q.chapterEntity.id = :chapId", Long.class)
+                .setParameter("chapId", chapId)
+                .getResultList();
+        return data;
+    }
+
+    @Override
+    public List<String> findMultipleChoiceByQuizId(Long quizId) { // Find findMultipleChoice using QuizID
+        List<String> data = em.createNativeQuery("SELECT e.example_list from example_list e where e.quiz_id = :quizId")
+                .setParameter("quizId", quizId)
+                .getResultList();
+        return data;
+    }
 }

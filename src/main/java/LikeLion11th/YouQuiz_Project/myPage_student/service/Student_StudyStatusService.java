@@ -78,8 +78,8 @@ public class Student_StudyStatusService {
         return sentence.get(0);
     }
 
-    public List<Integer> findAnswerList (Long studentId, Long chapId) { // Find Answer_List using StudentID & ChapterID
-        List<Integer> answerlist = answerRepository.findAnswerList(studentId, chapId); // Extracting the Student's Answer_List
+    public List<Integer> findStuAnswerList (Long studentId, Long chapId) { // Find Answer_List using StudentID & ChapterID
+        List<Integer> answerlist = answerRepository.findStuAnswerList(studentId, chapId); // Extracting the Student's Answer_List
         return answerlist;
     }
 
