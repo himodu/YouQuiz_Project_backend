@@ -1,33 +1,12 @@
-package LikeLion11th.YouQuiz_Project.entity;
+package LikeLion11th.YouQuiz_Project.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import LikeLion11th.YouQuiz_Project.entity.AnswerEntity;
+import LikeLion11th.YouQuiz_Project.entity.TeacherEntity;
 
-import javax.persistence.*;
-
-@Entity
-@Table(name = "comment")
-public class CommentEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class CommentDto {
     private Long id;
-
     private String comment;
-
-    @JsonIgnore
-    @OneToOne(
-            targetEntity = AnswerEntity.class,
-            mappedBy = "commentEntity",
-            fetch = FetchType.LAZY
-    )
-    @JoinColumn(name = "ANSWER_ID")
     private AnswerEntity answerEntity;
-
-    @JsonIgnore
-    @ManyToOne(
-            targetEntity = TeacherEntity.class,
-            fetch = FetchType.LAZY
-    )
-    @JoinColumn(name = "TEACHER_ID")
     private TeacherEntity teacherEntity;
 
     public Long getId() {
@@ -64,10 +43,11 @@ public class CommentEntity {
 
     @Override
     public String toString() {
-        return "CommentEntity{" +
+        return "CommentDto{" +
                 "id=" + id +
                 ", comment='" + comment + '\'' +
                 ", answerEntity=" + answerEntity +
+                ", teacherEntity=" + teacherEntity +
                 '}';
     }
 }

@@ -1,21 +1,20 @@
 package LikeLion11th.YouQuiz_Project.model;
 
 public class TeacherDto {
-    private int id;
+    private Long id;
     private String userId;
     private String password;
     private String username;
     private String birth;
     private String sex;
     private String phoneNumber;
-
     private int class_id;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

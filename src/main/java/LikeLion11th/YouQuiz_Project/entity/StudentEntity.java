@@ -103,6 +103,22 @@ public class StudentEntity extends BaseEntity{
         this.id = id;
     }
 
+    public List<Class_StudentEntity> getClass_studentList() {
+        return class_studentList;
+    }
+
+    public void setClass_studentList(List<Class_StudentEntity> class_studentList) {
+        this.class_studentList = class_studentList;
+    }
+
+    public List<AnswerEntity> getAnswerList() {
+        return answerList;
+    }
+
+    public void setAnswerList(List<AnswerEntity> answerList) {
+        this.answerList = answerList;
+    }
+
     @Override
     public String toString() {
         return "StudentEntity{" +

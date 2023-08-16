@@ -79,9 +79,5 @@ public class StudyService {
 
 
         return chapterDto;
-
     }
-
-
-
 }
