@@ -13,6 +13,8 @@ public class ChapterEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String title;
+
     @JsonIgnore
     @ElementCollection
     @CollectionTable(name="CORRECT_ANSWER_LIST", joinColumns =  @JoinColumn(name="chapter_id", referencedColumnName = "id"))

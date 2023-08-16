@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ChapterDto {
+    private String title;
     private List<Integer> correct_answerList = new ArrayList<>();
     private String youtube_link;
     private List<QuizEntity> quizEntityList;
@@ -15,6 +16,14 @@ public class ChapterDto {
 
     public List<Integer> getCorrect_answerList() {
         return correct_answerList;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public void setCorrect_answerList(List<Integer> correct_answerList) {
