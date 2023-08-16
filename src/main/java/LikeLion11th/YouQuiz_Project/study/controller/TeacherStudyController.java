@@ -1,6 +1,7 @@
 package LikeLion11th.YouQuiz_Project.study.controller;
 
 import LikeLion11th.YouQuiz_Project.model.CommentDto;
+import LikeLion11th.YouQuiz_Project.model.InfoDto;
 import LikeLion11th.YouQuiz_Project.study.service.TeacherStudyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,12 +22,12 @@ public class TeacherStudyController {
     // 해당 chapter 학습 페이지 진입
     // chapterdto, answerdto, commentdto
     @GetMapping("{class_id}/{chapter_id}")
-    public void readAllAboutChapter(
+    public InfoDto readAllAboutChapter(
             @PathVariable("class_id") Long class_id,
             @PathVariable("chapter_id") Long chapter_id,
             @PathVariable("teacher_id") Long teacher_id
     ){
-        this.teacherStudyService.readAllAboutChapter(class_id, chapter_id,teacher_id);
+       return this.teacherStudyService.readAllAboutChapter(class_id, chapter_id,teacher_id);
     }
 
     // 교육자 학습 post

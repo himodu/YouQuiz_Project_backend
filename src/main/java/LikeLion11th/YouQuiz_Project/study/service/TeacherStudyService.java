@@ -1,6 +1,8 @@
 package LikeLion11th.YouQuiz_Project.study.service;
 
 import LikeLion11th.YouQuiz_Project.entity.*;
+import LikeLion11th.YouQuiz_Project.model.AnswerDto;
+import LikeLion11th.YouQuiz_Project.model.AnswerSentenceDto;
 import LikeLion11th.YouQuiz_Project.model.CommentDto;
 import LikeLion11th.YouQuiz_Project.model.InfoDto;
 import LikeLion11th.YouQuiz_Project.repository.*;
@@ -45,7 +47,7 @@ public class TeacherStudyService {
     public InfoDto readAllAboutChapter(Long class_id, Long chapter_id, Long teacher_id) {
         InfoDto infoDto = new InfoDto();
         List<Class_StudentEntity> classStudentEntityList = new ArrayList<>();
-        List<String> answer_sentence_list = new ArrayList<>();
+        List<AnswerSentenceDto> answer_sentence_list = new ArrayList<>();
         List<CommentEntity> commentEntityList = new ArrayList<>();
 
         Optional<ClassEntity> classEntity = classRepository1.findById(Long.valueOf(class_id));
@@ -68,7 +70,6 @@ public class TeacherStudyService {
         infoDto.setCorrect_answerList(chapterEntity.get().getCorrect_answerList());
         infoDto.setYoutube_link(chapterEntity.get().getYoutube_link());
         infoDto.setQuizEntityList(chapterEntity.get().getQuizEntityList());
-        infoDto.setClass_ChapterEntityList(chapterEntity.get().getClass_ChapterEntityList());
 
         // Teacher
         infoDto.setTeacher_id(teacherEntity.get().getId());
@@ -88,7 +89,8 @@ public class TeacherStudyService {
                 if(chapter.getId()==chapter_id)
                 {
                     // 주관식 답변 list에 학생 답변 추가
-                    answer_sentence_list.add(answer.getAnswer_sentence());
+                    AnswerSentenceDto answerDto = new AnswerSentenceDto(student_id, answer.getAnswer_sentence());
+                    answer_sentence_list.add(answerDto);
 
                     // 교육자 comment list에 추가
                     CommentEntity commentEntity = answer.getCommentEntity();
@@ -122,10 +124,6 @@ public class TeacherStudyService {
         Optional<AnswerEntity> answerEntity = answerRepository1.findById(Long.valueOf(answer_id));
         if(answerEntity.isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
-
-        if(commentRepository1.findById(commentDto.getId()).isPresent()){
-            throw new ResponseStatusException(HttpStatus.MULTI_STATUS);
         }
 
         commentEntity.setId(commentDto.getId());

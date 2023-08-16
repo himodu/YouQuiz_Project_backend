@@ -35,7 +35,7 @@ public class LoginService {
 
         if(targetStudent.get().getPassword().equals(studentDto.getPassword())){
             StudentDto returnStudent = new StudentDto();
-            returnStudent.setId(targetStudent.get().getId().intValue());
+            returnStudent.setId(targetStudent.get().getId());
             returnStudent.setUsername(targetStudent.get().getUsername());
 
             return returnStudent;
@@ -53,7 +53,7 @@ public class LoginService {
 
         if(targetTeacher.get().getPassword().equals(teacherDto.getPassword())){
             TeacherDto returnTeacher = new TeacherDto();
-            returnTeacher.setId(targetTeacher.get().getId().intValue());
+            returnTeacher.setId(targetTeacher.get().getId());
             returnTeacher.setUsername(targetTeacher.get().getUsername());
 
             return returnTeacher;

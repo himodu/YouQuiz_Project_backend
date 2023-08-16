@@ -17,13 +17,13 @@ public class InfoDto {
     private List<Integer> correct_answerList = new ArrayList<>();
     private String youtube_link;
     private List<QuizEntity> quizEntityList;
-    private List<Class_ChapterEntity> class_ChapterEntityList = new ArrayList<>();
+//    private List<Class_ChapterEntity> class_ChapterEntityList = new ArrayList<>();
 
     // TeacherDto
     private Long teacher_id;
 
     // AnswerDto
-    private List<String> answer_sentence_list = new ArrayList<>();
+    private List<AnswerSentenceDto> answer_sentence_list = new ArrayList<>();
 
     // CommentDto
     private List<CommentEntity> commentEntityList;
@@ -55,14 +55,6 @@ public class InfoDto {
         this.quizEntityList = quizEntityList;
     }
 
-    public List<Class_ChapterEntity> getClass_ChapterEntityList() {
-        return class_ChapterEntityList;
-    }
-
-    public void setClass_ChapterEntityList(List<Class_ChapterEntity> class_ChapterEntityList) {
-        this.class_ChapterEntityList = class_ChapterEntityList;
-    }
-
     public Long getTeacher_id() {
         return teacher_id;
     }
@@ -71,11 +63,11 @@ public class InfoDto {
         this.teacher_id = teacher_id;
     }
 
-    public List<String> getAnswer_sentence_list() {
+    public List<AnswerSentenceDto> getAnswer_sentence_list() {
         return answer_sentence_list;
     }
 
-    public void setAnswer_sentence_list(List<String> answer_sentence_list) {
+    public void setAnswer_sentence_list(List<AnswerSentenceDto> answer_sentence_list) {
         this.answer_sentence_list = answer_sentence_list;
     }
 
