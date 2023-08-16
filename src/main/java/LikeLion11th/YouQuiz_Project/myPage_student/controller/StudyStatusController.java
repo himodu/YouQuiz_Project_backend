@@ -24,9 +24,11 @@ public class StudyStatusController {
 
     @GetMapping(value = "/student/{student_id}/studystatus/{chapter_id}")
     @ResponseBody
-    public JSONObject findStudyStatus(@PathVariable Map<String, String> pathVarsMap) { // Find Learning Status of Each Chapter
-        Long student_id = Long.parseLong(pathVarsMap.get("student_id"));
-        Long chapter_id = Long.parseLong(pathVarsMap.get("chapter_id"));
-        JSONObject result = studyStatusService.findStudyStatus(student_id, chapter_id);
+    public JSONObject findStudyStatus(
+            @PathVariable("student_id") int studentId,
+            @PathVariable("chapter_id") int chapterId
+            ) { // Find Learning Status of Each Chapter
+
+        JSONObject result = studyStatusService.findStudyStatus(studentId, chapterId);
         return result;
     }}
