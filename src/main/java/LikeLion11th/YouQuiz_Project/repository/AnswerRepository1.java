@@ -6,4 +6,5 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface AnswerRepository1 extends CrudRepository<AnswerEntity, Long> {
 
+
 }

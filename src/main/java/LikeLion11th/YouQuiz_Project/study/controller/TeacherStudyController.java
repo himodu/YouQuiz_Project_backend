@@ -17,16 +17,21 @@ public class TeacherStudyController {
         this.teacherStudyService = teacherStudyService;
     }
 
-//    // 해당 chapter 학습 페이지 진입
-//    @GetMapping("{chapter_id}")
-//    public void view_page(
-//
-//    ){
-//
-//    }
+    // 교육자 학습 get
+    // 해당 chapter 학습 페이지 진입
+    // chapterdto, answerdto, commentdto
+    @GetMapping("{class_id}/{chapter_id}")
+    public void readAllAboutChapter(
+            @PathVariable("class_id") Long class_id,
+            @PathVariable("chapter_id") Long chapter_id,
+            @PathVariable("teacher_id") Long teacher_id
+    ){
+        this.teacherStudyService.readAllAboutChapter(class_id, chapter_id,teacher_id);
+    }
 
+    // 교육자 학습 post
     @PostMapping("{answer_id}/comment")
-    public void write_comment(
+    public void createComment(
             @RequestBody CommentDto commentDto,
             @PathVariable("teacher_id") Long teacher_id,
             @PathVariable("answer_id") Long answer_id
