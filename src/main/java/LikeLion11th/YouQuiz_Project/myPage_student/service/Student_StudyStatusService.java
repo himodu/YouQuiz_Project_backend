@@ -51,6 +51,11 @@ public class Student_StudyStatusService {
         return (data.isEmpty() == true) ? "X" : "O";
     }
 
+    public String findYoutubeTitleByChapID(Long chapId) { // Find Youtube Title using ChapterID
+        List<String> title = chapterRepository.findYoutubeTitleByChapID(chapId);
+        return title.get(0);
+    }
+
     public JSONObject findStudiedChapByStuID(Long studentId) { // Find Not Studied Chapter using StudentID
         JSONObject returnJSON = new JSONObject();
         JSONArray chapterArray = new JSONArray(); // Create JSON Array using JSON DATA
@@ -61,7 +66,8 @@ public class Student_StudyStatusService {
                 JSONObject chapterObject = new JSONObject(); // Create JSON Data using extracted data (YoutubeLink & ChapterID) from DB
                 if (checkStudyStatus(studentId, chapId) == "O") {
                     chapterObject.put("chap_id", String.valueOf(chapId));
-                    chapterObject.put("youtube_url", findURLByChapID(chapId));
+                    chapterObject.put("youtube_link", findURLByChapID(chapId));
+                    chapterObject.put("title", findYoutubeTitleByChapID(chapId));
                     chapterObject.put("score", (findScore(studentId, chapId).isEmpty()) ? "Not Evaluated" : String.valueOf(findScore(studentId, chapId).get(0)));
                     chapterArray.add(chapterObject);
                 } else {
