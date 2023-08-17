@@ -42,6 +42,11 @@ public class NoStudyListService {
         return (data.isEmpty() == true) ? "U" : "S";
     }
 
+    public String findYoutubeTitleByChapID(Long chapId) { // Find YoutubeTitle using ChapterID
+        List<String> title = chapterRepository.findYoutubeTitleByChapID(chapId);
+        return title.get(0);
+    }
+
     public JSONObject findYoutubeURLByStuID(Long studentId) { // Find YoutubeURL using StudentID
         JSONObject returnJSON = new JSONObject();
         JSONArray chapterArray = new JSONArray(); // Create JSON Array using JSON DATA
@@ -53,6 +58,7 @@ public class NoStudyListService {
                 if (checkStudyStatus(studentId, chapId) == "U") { // Add ChapterID & YoutubeURL to JSON if ONLY NOT Studied
                     chapterObject.put("chap_id", String.valueOf(chapId));
                     chapterObject.put("youtube_link", findURLByChapID(chapId));
+                    chapterObject.put("title", findYoutubeTitleByChapID(chapId));
                     chapterArray.add(chapterObject);
                 } else {
                     continue;
