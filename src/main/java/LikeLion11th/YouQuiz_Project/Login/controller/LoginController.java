@@ -4,11 +4,9 @@ import LikeLion11th.YouQuiz_Project.Login.service.LoginService;
 import LikeLion11th.YouQuiz_Project.model.StudentDto;
 import LikeLion11th.YouQuiz_Project.model.TeacherDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("login")
 public class LoginController {
