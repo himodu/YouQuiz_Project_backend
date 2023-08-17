@@ -67,6 +67,7 @@ public class TeacherStudyService {
 
         // chapter의 문제, 선택지, 정답
         // Chapter
+        infoDto.setTitle(chapterEntity.get().getTitle());
         infoDto.setCorrect_answerList(chapterEntity.get().getCorrect_answerList());
         infoDto.setYoutube_link(chapterEntity.get().getYoutube_link());
         infoDto.setQuizEntityList(chapterEntity.get().getQuizEntityList());
@@ -80,6 +81,7 @@ public class TeacherStudyService {
         for(Class_StudentEntity classStudentEntity :classStudentEntityList){
             StudentEntity student = classStudentEntity.getStudentEntity();
             Long student_id = student.getId(); // class 안의 각 학생 id
+            String username = student.getUsername();
             List<AnswerEntity> answerEntityList = student.getAnswerList();
 
             for(AnswerEntity answer : answerEntityList){
@@ -89,7 +91,7 @@ public class TeacherStudyService {
                 if(chapter.getId()==chapter_id)
                 {
                     // 주관식 답변 list에 학생 답변 추가
-                    AnswerSentenceDto answerDto = new AnswerSentenceDto(student_id, answer.getAnswer_sentence());
+                    AnswerSentenceDto answerDto = new AnswerSentenceDto(student_id, username, answer.getAnswer_sentence());
                     answer_sentence_list.add(answerDto);
 
                     // 교육자 comment list에 추가

@@ -45,6 +45,14 @@ public class ChapterEntity {
         this.id = id;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public List<Integer> getCorrect_answerList() {
         return correct_answerList;
     }

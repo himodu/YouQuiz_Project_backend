@@ -14,6 +14,7 @@ import java.util.List;
 public class InfoDto {
 
     // ChapterDto
+    private String title;
     private List<Integer> correct_answerList = new ArrayList<>();
     private String youtube_link;
     private List<QuizEntity> quizEntityList;
@@ -29,6 +30,14 @@ public class InfoDto {
     private List<CommentEntity> commentEntityList;
 
     public InfoDto() {
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public List<Integer> getCorrect_answerList() {
