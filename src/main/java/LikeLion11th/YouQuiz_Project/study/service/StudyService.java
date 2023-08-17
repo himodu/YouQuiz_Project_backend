@@ -73,6 +73,7 @@ public class StudyService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
 
+        chapterDto.setTitle(chapterEntity.get().getTitle());
         chapterDto.setYoutube_link(chapterEntity.get().getYoutube_link());
         chapterDto.setCorrect_answerList(chapterEntity.get().getCorrect_answerList());
         chapterDto.setQuizEntityList(chapterEntity.get().getQuizEntityList());
