@@ -26,4 +26,12 @@ public class JpaChapterRepository implements ChapterRepository {
                 .getResultList();
         return data;
     }
+
+    @Override
+    public List<String> findYoutubeTitleByChapID(Long chapId) { // Find Youtube Title using ChapterID
+        List<String> data = em.createQuery("select c.title from ChapterEntity c where c.id = :chapId", String.class)
+                .setParameter("chapId", chapId)
+                .getResultList();
+        return data;
+    }
 }

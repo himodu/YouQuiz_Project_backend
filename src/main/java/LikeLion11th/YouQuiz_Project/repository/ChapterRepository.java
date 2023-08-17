@@ -7,5 +7,6 @@ import java.util.List;
 public interface ChapterRepository {
     List<String> findURLByChapID(Long chapId); // Find YoutubeURL using ChapterID
 
+    List<String> findYoutubeTitleByChapID(Long chapId); // Find Youtube Title using ChapterID
     List<Integer> findAnswerListByChapID(Long chapId); // Find Answer-List using ChapterID
 }
