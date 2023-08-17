@@ -73,7 +73,7 @@ public class Teacher_EvaluationStatusService {
                     userCommentNumber += (CountComment(studentId, chapId).isEmpty()) ? 0 : 1; // Add 1 to Student Comment Counter Variable (userCommentNumber) if Student's Answer exist.
                     CompleteStudent += (userCommentNumber == CountChapter(classId)) ? 1 : 0; // answer evaluation is finished if the number of Teacher's Comment equals the number of Chapter in Class
                 }
-                studentInfo.put("youtube_url", findURLByChapID(chapId));
+                studentInfo.put("youtube_link", findURLByChapID(chapId));
                 studentInfo.put("complete_student", String.valueOf(CompleteStudent));
                 studentInfo.put("total_student", String.valueOf(CountStudent(classId)));
                 studentInfo.put("chap_id", String.valueOf(chapId));

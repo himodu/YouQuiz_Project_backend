@@ -21,7 +21,6 @@ public class ChapterEntity {
     private List<Integer> correct_answerList = new ArrayList<>();
 
     private String youtube_link;
-
     @JsonIgnore
     @OneToMany(
             targetEntity = Class_ChapterEntity.class,
