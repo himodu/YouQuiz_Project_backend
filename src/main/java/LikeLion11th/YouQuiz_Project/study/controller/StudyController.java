@@ -6,7 +6,7 @@ import LikeLion11th.YouQuiz_Project.study.service.StudyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("student/{student_id}/study")
 public class StudyController {

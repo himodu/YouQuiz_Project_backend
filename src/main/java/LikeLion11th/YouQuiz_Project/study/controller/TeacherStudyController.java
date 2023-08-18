@@ -7,9 +7,9 @@ import LikeLion11th.YouQuiz_Project.model.TeacherChapterListDto;
 import LikeLion11th.YouQuiz_Project.study.service.TeacherStudyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("teacher/{teacher_id}/study")
 public class TeacherStudyController {

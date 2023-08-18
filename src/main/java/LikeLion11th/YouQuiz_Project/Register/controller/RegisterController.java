@@ -6,7 +6,7 @@ import LikeLion11th.YouQuiz_Project.model.StudentDto;
 import LikeLion11th.YouQuiz_Project.model.TeacherDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("register")
 public class RegisterController {

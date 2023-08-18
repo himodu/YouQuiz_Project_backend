@@ -18,4 +18,20 @@ public class JpaChapterRepository implements ChapterRepository {
                 .getResultList(); // Extracting the data which meets the criterion using SQL Query, and Saving as a list (criterion: ChapterID)
         return data;
     }
+
+    @Override
+    public List<Integer> findAnswerListByChapID(Long chapId) { // Find Answer-List using ChapterID
+        List<Integer> data = em.createNativeQuery("select c.correct_answer_list from correct_answer_list c where c.chapter_id = :chapId")
+                .setParameter("chapId", chapId)
+                .getResultList();
+        return data;
+    }
+
+    @Override
+    public List<String> findYoutubeTitleByChapID(Long chapId) { // Find Youtube Title using ChapterID
+        List<String> data = em.createQuery("select c.title from ChapterEntity c where c.id = :chapId", String.class)
+                .setParameter("chapId", chapId)
+                .getResultList();
+        return data;
+    }
 }

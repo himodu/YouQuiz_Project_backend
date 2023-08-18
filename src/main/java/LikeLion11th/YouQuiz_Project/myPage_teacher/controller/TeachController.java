@@ -4,10 +4,11 @@ import LikeLion11th.YouQuiz_Project.myPage_teacher.service.Teacher_EvaluationSta
 import LikeLion11th.YouQuiz_Project.myPage_teacher.service.Teacher_StudyStatusService;
 import org.json.simple.JSONObject;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
-
+@CrossOrigin(origins = "*")
 @Controller
 public class TeachController {
     private final Teacher_StudyStatusService teacherStudyStatusService;
