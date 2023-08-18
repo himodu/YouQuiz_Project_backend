@@ -16,7 +16,7 @@ public class LoginController {
         this.loginService = loginService;
     }
 
-    @GetMapping("student")
+    @PostMapping("student")
     public StudentDto Stdent_Login(
             @RequestBody StudentDto studentDto
     ){
@@ -26,7 +26,7 @@ public class LoginController {
         return new_studentDto;
     }
 
-    @GetMapping("teacher")
+    @PostMapping("teacher")
     public TeacherDto teacher_Login(
             @RequestBody TeacherDto teacherDto
     ){
