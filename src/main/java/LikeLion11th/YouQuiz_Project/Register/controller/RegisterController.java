@@ -4,6 +4,7 @@ import LikeLion11th.YouQuiz_Project.Register.service.RegisterService;
 import LikeLion11th.YouQuiz_Project.model.ClassDto;
 import LikeLion11th.YouQuiz_Project.model.StudentDto;
 import LikeLion11th.YouQuiz_Project.model.TeacherDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "*")
 @RestController
@@ -13,7 +14,8 @@ public class RegisterController {
     private final RegisterService registerService;
 
 
-    public RegisterController(RegisterService registerService) {
+    public RegisterController(
+            @Autowired RegisterService registerService) {
         this.registerService = registerService;
     }
 
