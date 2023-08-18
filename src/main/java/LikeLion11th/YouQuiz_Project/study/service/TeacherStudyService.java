@@ -1,10 +1,7 @@
 package LikeLion11th.YouQuiz_Project.study.service;
 
 import LikeLion11th.YouQuiz_Project.entity.*;
-import LikeLion11th.YouQuiz_Project.model.AnswerDto;
-import LikeLion11th.YouQuiz_Project.model.AnswerSentenceDto;
-import LikeLion11th.YouQuiz_Project.model.CommentDto;
-import LikeLion11th.YouQuiz_Project.model.InfoDto;
+import LikeLion11th.YouQuiz_Project.model.*;
 import LikeLion11th.YouQuiz_Project.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -42,6 +39,30 @@ public class TeacherStudyService {
 
         this.commentRepository1 = commentRepository1;
         this.answerRepository1 = answerRepository1;
+    }
+
+    public TeacherChapterListDto readTeacherChapter(Long teacher_id){
+        TeacherChapterListDto teacherChapterListDto = new TeacherChapterListDto();
+        List<TeacherChapterDto> teacherChapterList = new ArrayList<>();
+
+        Optional<ClassEntity> classEntity = classRepository1.findByTeacherEntity(teacher_id);
+
+        List<Class_ChapterEntity> classChapterEntityList = classEntity.get().getClass_chapterEntityList();
+
+        for(Class_ChapterEntity class_chapterEntity :classChapterEntityList) {
+            // 그 클래스 안의 chapter
+            ChapterEntity chapter = class_chapterEntity.getChapterEntity();
+            TeacherChapterDto teacherChapter = new TeacherChapterDto();
+            teacherChapter.setChapter_id(chapter.getId());
+            teacherChapter.setTitle(chapter.getTitle());
+            teacherChapter.setYoutube_link(chapter.getYoutube_link());
+
+            teacherChapterList.add(teacherChapter);
+        }
+
+        teacherChapterListDto.setTeacherChapterList(teacherChapterList);
+
+        return teacherChapterListDto;
     }
 
     public InfoDto readAllAboutChapter(Long class_id, Long chapter_id, Long teacher_id) {

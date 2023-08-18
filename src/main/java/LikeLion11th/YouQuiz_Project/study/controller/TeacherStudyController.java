@@ -2,9 +2,13 @@ package LikeLion11th.YouQuiz_Project.study.controller;
 
 import LikeLion11th.YouQuiz_Project.model.CommentDto;
 import LikeLion11th.YouQuiz_Project.model.InfoDto;
+import LikeLion11th.YouQuiz_Project.model.TeacherChapterDto;
+import LikeLion11th.YouQuiz_Project.model.TeacherChapterListDto;
 import LikeLion11th.YouQuiz_Project.study.service.TeacherStudyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("teacher/{teacher_id}/study")
@@ -16,6 +20,18 @@ public class TeacherStudyController {
             @Autowired TeacherStudyService teacherStudyService
     ){
         this.teacherStudyService = teacherStudyService;
+    }
+
+    // 교육자 학습 목록
+    // 전체 class 돌면서 teacher_ids 갖는 class 가져와서
+    // class_chapter 들어가서 chapter_id 받아와서
+    // list에 추가하고 반환
+
+    @GetMapping("")
+    public TeacherChapterListDto readTeacherChapter(
+            @PathVariable("teacher_id") Long teacher_id
+    ){
+        return this.teacherStudyService.readTeacherChapter(teacher_id);
     }
 
     // 교육자 학습 get
