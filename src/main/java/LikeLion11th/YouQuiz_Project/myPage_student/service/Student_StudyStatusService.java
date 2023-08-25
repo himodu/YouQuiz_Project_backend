@@ -101,16 +101,20 @@ public class Student_StudyStatusService {
         return score;
     }
 
-    public String findTeacherComment(Long studentId, Long chapId) { // Find Teacher's Comment using StudentID & ChapterID
-        Long TeacherCommentId = answerRepository.findTeacherCommentID(studentId, chapId).get(0);
-        List<String> TeacherComment = commentRepository.findTeacherCommentByCommentID(TeacherCommentId);
-        return TeacherComment.get(0);
+    public List<Long> findTeacherCommentId(Long studentId, Long chapId) { // Find Teacher's CommentID using StudentID & ChapterID
+        List<Long> TeacherCommentId = answerRepository.findTeacherCommentID(studentId, chapId);
+        return TeacherCommentId;
     }
 
-    public JSONObject findStudyStatus(int studentId, int chapId) { // Find Learning Status of Each Chapter
+    public String findTeacherComment(Long commentId) { // Find Teacher's Comment using CommentID
+        List<String> comment = commentRepository.findTeacherCommentByCommentID(commentId);
+        return comment.get(0);
+    }
+
+    public JSONObject findStudyStatus(Long studentId, Long chapId) { // Find Learning Status of Each Chapter
           JSONObject returnJSON = new JSONObject();
 
-          AnswerEntity answerEntity = answerRepository1.findByChapterEntityAndStudentEntity(Long.valueOf(chapId), Long.valueOf(studentId));
+          AnswerEntity answerEntity = answerRepository1.findByChapterEntityAndStudentEntity(chapId, studentId);
           JSONArray answerList = new JSONArray();
 
           returnJSON.put("student_answer_list",answerEntity.getAnswersList());
@@ -123,7 +127,7 @@ public class Student_StudyStatusService {
         returnJSON.put("correct_answerList", chapterDto.getCorrect_answerList());
         returnJSON.put("youtube_link", chapterDto.getYoutube_link());
         returnJSON.put("quizEntityList", chapterDto.getQuizEntityList());
-        returnJSON.put("teacher_comment", findTeacherComment(Long.valueOf(studentId), Long.valueOf(chapId)));
+        returnJSON.put("teacher_comment", findTeacherComment(Long.parseLong(String.valueOf(findTeacherCommentId(studentId, chapId).get(0)))));
 
         return returnJSON;
     }

@@ -64,7 +64,7 @@ public class StudyService {
 
     }
 
-    public ChapterDto readChapter(int chap_id){
+    public ChapterDto readChapter(long chap_id){
 
         ChapterDto chapterDto = new ChapterDto();
 
