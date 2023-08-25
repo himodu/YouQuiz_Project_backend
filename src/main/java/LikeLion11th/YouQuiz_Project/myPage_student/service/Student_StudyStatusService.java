@@ -17,11 +17,12 @@ public class Student_StudyStatusService {
     private final AnswerRepository answerRepository;
     private final AnswerRepository1 answerRepository1;
     private final QuizRepository quizRepository;
-
+    private final CommentRepository commentRepository;
     private final StudyService studyService;
 
     public Student_StudyStatusService(Class_StudentRepository classStudentRepository, Class_ChapterRepository classChapterRepository,
-                                      ChapterRepository chapterRepository, AnswerRepository answerRepository, QuizRepository quizRepository, StudyService studyService,AnswerRepository1 answerRepository1) {
+                                      ChapterRepository chapterRepository, AnswerRepository answerRepository, QuizRepository quizRepository, StudyService studyService,
+                                      AnswerRepository1 answerRepository1, CommentRepository commentRepository) {
         this.classStudentRepository = classStudentRepository;
         this.classChapterRepository = classChapterRepository;
         this.chapterRepository = chapterRepository;
@@ -29,6 +30,7 @@ public class Student_StudyStatusService {
         this.quizRepository = quizRepository;
         this.studyService = studyService;
         this.answerRepository1 = answerRepository1;
+        this.commentRepository = commentRepository;
     }
 
     public List<Long> findClassIdByStuId(Long studentId) { // Find ClassID using StudentID
@@ -99,6 +101,12 @@ public class Student_StudyStatusService {
         return score;
     }
 
+    public String findTeacherComment(Long studentId, Long chapId) { // Find Teacher's Comment using StudentID & ChapterID
+        Long TeacherCommentId = answerRepository.findTeacherCommentID(studentId, chapId).get(0);
+        List<String> TeacherComment = commentRepository.findTeacherCommentByCommentID(TeacherCommentId);
+        return TeacherComment.get(0);
+    }
+
     public JSONObject findStudyStatus(int studentId, int chapId) { // Find Learning Status of Each Chapter
           JSONObject returnJSON = new JSONObject();
 
@@ -115,6 +123,7 @@ public class Student_StudyStatusService {
         returnJSON.put("correct_answerList", chapterDto.getCorrect_answerList());
         returnJSON.put("youtube_link", chapterDto.getYoutube_link());
         returnJSON.put("quizEntityList", chapterDto.getQuizEntityList());
+        returnJSON.put("teacher_comment", findTeacherComment(Long.valueOf(studentId), Long.valueOf(chapId)));
 
         return returnJSON;
     }

@@ -21,7 +21,14 @@ public class JpaAnswerRepository implements AnswerRepository {
         return data;
     }
 
-
+    @Override
+    public List<Long> findTeacherCommentID(Long studentId, Long chapId) { // Find Teacher's Comment ID using StudentID & ChapterID
+        List<Long> data = em.createQuery("select comment_entity_id from answer where chapter_id = :chapId AND student_id = :studentId")
+                .setParameter("chapId", chapId)
+                .setParameter("studentId", studentId)
+                .getResultList();
+        return data;
+    }
 
     @Override
     public List<String> findAnswerSentence(Long studentId, Long chapId) { // Find Student's Answer_Sentence Using StudentID & ChapterID
