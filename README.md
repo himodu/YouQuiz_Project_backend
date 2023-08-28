@@ -31,13 +31,15 @@ DB서버는 네이버 클라우드에서 제공하는 SaaS를 이용하였다.<b
 ## 프로젝트 설치 및 실행 방법
 Java 버전 : 11
 
-
+```
+git clone
+```
 
 ## 팀원 및 참고 자료
 <table>
   <tbody>
     <tr>
-      <td align="center"><a href="https://github.com/himodu"><img src="https://avatars.githubusercontent.com/u/71763322?v=4" width="100px;" alt=""/><br /><sub><b>BE 팀장 : 이동건 </b></sub></a><br /></td>
+      <td align="center"><a href="https://github.com/himodu"><img src="https://avatars.githubusercontent.com/u/71763322?v=4" width="100px;" alt=""/><br /><sub><b>BE 팀장 : 이동건 (himodu)</b></sub></a><br /></td>
       <td align="center"><a href="https://github.com/SubinPyeon"><img src="https://avatars.githubusercontent.com/u/105070397?v=4" width="100px;" alt=""/><br /><sub><b>BE 팀원 : 편수빈 (SubinPyeon) </b></sub></a><br /></td>
       <td align="center"><a href="https://github.com/wjdqh6544"><img src="https://avatars.githubusercontent.com/u/77498822?v=4" width="100px;" alt=""/><br /><sub><b>BE 팀원 : 서형철 (wjdqh6544) </b></sub></a><br /></td>
     </tr>
