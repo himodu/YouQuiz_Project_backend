@@ -36,7 +36,7 @@ Java 버전 : 11
 <table>
   <tbody>
     <tr>
-      <td align="center"><a href=""><img src="" width="100px;" alt=""/><br /><sub><b>BE 팀장 : 이동건 </b></sub></a><br /></td>
+      <td align="center"><a href="https://github.com/himodu"><img src="https://avatars.githubusercontent.com/u/71763322?v=4" width="100px;" alt=""/><br /><sub><b>BE 팀장 : 이동건 </b></sub></a><br /></td>
       <td align="center"><a href="https://github.com/SubinPyeon"><img src="https://avatars.githubusercontent.com/u/105070397?v=4" width="100px;" alt=""/><br /><sub><b>BE 팀원 : 편수빈 (SubinPyeon) </b></sub></a><br /></td>
       <td align="center"><a href="https://github.com/wjdqh6544"><img src="https://avatars.githubusercontent.com/u/77498822?v=4" width="100px;" alt=""/><br /><sub><b>BE 팀원 : 서형철 (wjdqh6544) </b></sub></a><br /></td>
     </tr>
