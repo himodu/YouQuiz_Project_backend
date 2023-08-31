@@ -4,5 +4,5 @@ import javax.persistence.EntityManager;
 import java.util.List;
 
 public interface CommentRepository {
-    List<String> findTeacherCommentByCommentID(Long commentId);
+    String findTeacherCommentByCommentID(Long commentId);
 }

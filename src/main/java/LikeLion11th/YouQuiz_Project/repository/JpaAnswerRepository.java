@@ -4,6 +4,7 @@ import LikeLion11th.YouQuiz_Project.entity.AnswerEntity;
 import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class JpaAnswerRepository implements AnswerRepository {
@@ -22,12 +23,12 @@ public class JpaAnswerRepository implements AnswerRepository {
     }
 
     @Override
-    public List<Long> findTeacherCommentID(Long studentId, Long chapId) { // Find Teacher's Comment ID using StudentID & ChapterID
-        List<Long> data = em.createNativeQuery("select comment_entity_id from answer where chapter_id = :chapId AND student_id = :studentId")
+    public Long findTeacherCommentID(Long studentId, Long chapId) { // Find Teacher's Comment ID using StudentID & ChapterID
+        Object data = em.createNativeQuery("select comment_entity_id from answer where chapter_id = :chapId AND student_id = :studentId")
                 .setParameter("chapId", chapId)
                 .setParameter("studentId", studentId)
-                .getResultList();
-        return data;
+                .getSingleResult();
+        return Long.valueOf(String.valueOf(data));
     }
 
     @Override

@@ -4,6 +4,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import java.util.List;
+import java.util.Objects;
 
 @Repository
 public class JpaCommentRepository implements CommentRepository {
@@ -12,10 +13,10 @@ public class JpaCommentRepository implements CommentRepository {
         this.em = em;
     }
     @Override
-    public List<String> findTeacherCommentByCommentID(Long commentId) {
-        List<String> data = em.createNativeQuery("select comment from comment where id = :commentId")
+    public String findTeacherCommentByCommentID(Long commentId) {
+        Object data = em.createNativeQuery("select comment from comment where id = :commentId")
                 .setParameter("commentId", commentId)
-                .getResultList();
-        return data;
+                .getSingleResult();
+        return String.valueOf(data);
     }
 }
