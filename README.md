@@ -47,6 +47,7 @@ DB서버는 네이버 클라우드에서 제공하는 SaaS를 이용하였다.<b
 - SaaS (Powered by NAVER Cloud Platform)
 <br>
 <br>
+
 ### 1. System 기본 설정 - FrontEnd
 
 cf> root 계정으로 로그인하지 않은 경우, yum 명령이 잘 실행되지 않을 수 있음.
