@@ -252,7 +252,7 @@ cd [SpringBoot 프로젝트 저장경로] && ./gradlew build
 
 IV. 프로젝트 실행
    - plain 이 붙은 jar 는 의존성 제거 후 빌드한 것이라고 한다.
-   - plain 안 붙은 jar로 실행.
+   - plain "안" 붙은 jar로 실행.
 ```
 java -jar [SpringBoot 프로젝트 저장경로]/build/libs/xxx.jar
 ```
@@ -267,7 +267,7 @@ nohup java -jar [SpringBoot Project 저장경로]/build/libs/xxx.jar &
 VI. 로그 확인
    - nohup 명령어를 실행한 디렉토리에, nohup.out 으로 로그가 저장된다.
    - Putty 커맨드에서 cat nohup.out 혹은 vi nohup.out 으로 확인할 수 있다.
-   - 혹은, Filezilla 등 FTP (SFTP) 프로그램을 활용하여 작업용 노트북으로 로그파일을 옮긴 후, 메모장 등으로 열어도 된다.
+   - 혹은, Filezilla 등 (S)FTP 프로그램을 활용하여 작업용 노트북으로 로그파일을 옮긴 후, 메모장 등으로 열어도 된다.
 
 끝.
 
