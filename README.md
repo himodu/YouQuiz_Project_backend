@@ -46,7 +46,6 @@ DB서버는 네이버 클라우드에서 제공하는 SaaS를 이용하였다.<b
 3. Database - MySQL / Port Open 3306
 - SaaS (Powered by NAVER Cloud Platform)
 <br>
-<br>
 
 ### 1. System 기본 설정 - FrontEnd
 
