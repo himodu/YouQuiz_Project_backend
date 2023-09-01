@@ -163,7 +163,7 @@ II. Project Clone
 ```
 git clone [Github Repository Address]
 ```
-<blockquote>cf> git: Command not found 에러 발생 시, 아래 몀령으로 git 설치<br>sudo yum install -y git</blockquote>
+<blockquote>cf> git: Command not found 에러 발생 시, 아래 명명령으로 git 설치<br>sudo yum install -y git</blockquote>
   
    - [현재 디렉토리]/[Repository 이름] 에 프로젝트 파일이 저장됨
 
@@ -273,11 +273,56 @@ VI. 로그 확인
 
 <br>
 
-### 5. Nginx Proxy 설정
+## Nginx Proxy 설정
 
-<작업중>
+### Proxy
+Proxy Server 는 Client 와 Server 사이에서 연결을 중재하고 데이터를 전달해 주는 서버이다. 본래 Proxy Server 는 캐싱을 목적으로 구축되었으나, 요즈음 캐싱 기능은 CDN으로 대체하는 추세이고, Proxy Server는 주로 보안 유지의 목적 (프록시 서버를 통해서만 서버에 접속할 수 있게 하는 등 - VPN개념) 으로 활용되곤 한다. 어찌 됐든, Client <--> Proxy <--> Server 의 형태로 데이터가 흐르며, Client 가 서버에 접속하기 위해 Proxy Server 를 경유한다.<br><br>그러나, 본 프로젝트에 사용된 것은 Reverse Proxy 로, 사용자가 Proxy 서버로 접속하도록 설정한 것이 아니라, 서버 측에서 Proxy를 설정해 둔 경우이다. 즉, Client는 그저 서버에 접속하기만 하면, Server 측에서 구축한 Proxy 가 Client's Connection 을 적절히 제어한다. 그러므로 Reverse Proxy 를 잘 활용한다면, 특정 IP 대역에서 날아오는 Request 는 모두 Refuse (ex. 특정 국가에서의 접속 차단) 한다거나, 때로는 Load Balancing(부하분산) 기능을 별도의 하드웨어 (L4 / L7 Switch) 없이 소프트웨어로 처리하는 등, 서버 운영의 안정성과 보안을 향상시킬 수 있다. Reverse Proxy 의 사용 목적과 기능을 고려한다면, NAT환경 (내부 네트워크 IP 대역이 달라, 내부 네트워크 안에서 각각의 여러 망으로 분리된 환경), 혹은 보안을 위해 고의로 서버를 여러 개로 분리시킨 경우, 혹은 단일 서버이더라도 보안상의 이유로 Traffic 을 걸러내야 하는 경우 등에 적절히 사용될 수 있는 기술이라 쉽게 추측할 수 있을 것이다.<br><br>사실, 본 프로젝트에서 굳이 Reverse Proxy 기능을 사용할 필요는 없었다. React 프로젝트의 package.json 에서 Service Port 를 80 으로 설정해주면, 별다른 작업 없이도 도메인을 사용하여 React Project 로의 접속이 가능하였기 때문이다. 하지만 Reverse Proxy (Load Balancing) 를 사용하여, Port 80 (http Protocol 기본 포트) 에 대한 Connection 을 Port 3000 (React 기본 포트) 으로 Redirection 처리하는 것이 더 간편할 뿐더러, 무엇보다 보안 측면에서 필수적인 SSL Encryption 을 적용하려면 Reverse Proxy 를 필수적으로 사용하여야 하기에 ― SSL 적용 후에도 http 에서의 접속을 허가한다면, SSL 적용 의미가 없으므로, http 에서의 Connection 을 https 로 Redirection 해주어야 한다. ― Nginx 웹서버를 활용한 Reverse Proxy 를 적용하였다.
 
+### DATA Flow
+현재 YouQuiz 서비스에서 데이터 처리 과정은 다음과 같은 흐름으로 이루어진다.
 
+<blockquote>Client <---> Nginx <---> React <---> SpringBoot <---> MySQL</blockquote>
+
+Client가 Domain (youquiz.site) 으로 접속하면, 우선 Nginx 웹서버를 경유한다. Nginx 에서는 80 포트로 들어온 Connection 을 3000 포트로 Redirection 시키면, React 와 Client 는 통신을 시작하는데, 이 과정에서 필요한 Data 를 React 가 SpringBoot 로 요청한다. SpringBoot 는 요청을 받고 MySQL 에서 필요한 데이터를 꺼내 적절히 가공하여 React 로 반환한다. 데이터를 저장할 때에도, Client 가 React 로 raw data 를 넘겨주면, React 는 데이터를 적절한 형식에 맞추어 SpringBoot 로 보내고, SpringBoot 는 받은 data 를 추출하여 MySQL 이 관리하는 Database 의 적절한 table 에 저장한다. 이와 같은 흐름이 Client 의 Request 마다 반복되어 서비스가 운용되는 것이다.
+
+### Nginx Settings
+본 프로젝트에서는 복잡한 Connection 설정이 필요하지 않으므로, 단일 conf 파일로 설정을 진행하였다.
+```
+vi /etc/nginx/conf.d/root.conf
+```
+파일명은 root.conf 인데, 어떤 이름이든 관계 없다. 다만 여러 (서브)도메인을 운용하는 경우, 관례적으로, 설정 현황 파악 및 관리의 편의성을 위해 [(서브)도메인.conf] 형태로 설정 파일을 저장한다. 본 프로젝트에서는 단일 도메인만을 사용하므로, 임의로 이름을 결정하여 root.conf 파일에 설정값들을 저장하였다.
+```
+// /etc/nginx/conf.d/root.conf
+1  server {
+2          listen 80;     
+3          server_name youquiz.site www.youquiz.site;
+4  #        location ^~ /.well-known/acme-challenge/ {
+5  #               default_type "text/plain";
+6  #               root /var/www/letsencrypt;
+7  #       }
+8          location / {
+9                 proxy_pass http://localhost:3000;
+10         }
+11         access_log /youquiz_log/access.log;
+12         error_log /youquiz_log/error.log;
+13 }
+```
+해당 설정 파일을 해석해 보면,
+
+   - Line 1 - server {} 블럭을 통해 nginx 에 하나의 도메인에 대한 설정 내용임을 알린다.
+   - Line 2 - 아래 설정은 Port 80 으로 Inbound 하는 Connection 중,
+   - Line 3 - youquiz.site 혹은 www.youquiz.site 도메인으로 Inbound 하는 Traffic 에 대한 것인데,
+   - (Line 4 ~ 7 - SSL Encryption (https) 적용 관련 설정)
+   - Line 8 - Domain 뒤에 / 가 붙은 경우, (즉 http://(www.)youquiz.site/ 인 경우)
+   - Line 9 - 해당 Connection 을 http://localhost:3000 으로 Redirection 시키며,
+   - Line 11 - 해당 Traffic 의 Inbound 사실을 /youquiz_log/access.log 에 기록하고,
+   - Line 12 - 해당 Traffic 에 대한 Connection 이 종료될 때 까지 발생한 ERROR 를 /youquiz_log/error.log 에 기록하라.
+
+는 뜻이다. 참고로, Line 8 에서, 만약 "location /admin" { 으로 되어 있다면, youquiz.site/admin 으로 Inbound하는 Connection 에 대한 설정이 된다. 또한, Redirection 하면서 header 의 내용까지 함게 전달해야 한다면, (ex. Client IP) location 블럭 아래쪽으로 관련 옵션들을 기재해주면 된다. (ex. proxy_pass_request_headers)
+
+끝.
+
+<br>
 ## 팀원 및 참고 자료
 <table>
   <tbody>
