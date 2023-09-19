@@ -58,6 +58,11 @@ public class Teacher_EvaluationStatusService {
         return URL.get(0);
     }
 
+    public String findYoutubeTitleByChapID(Long chapId) { // Find YoutubeTitle using ChapterID
+        List<String> title = chapterRepository.findYoutubeTitleByChapID(chapId);
+        return title.get(0);
+    }
+
     public JSONObject SearchEvaluationStatus (Long teacherId) { // Find Student's Evaluation Status using TeacherID
         JSONObject resultJSON = new JSONObject();
         JSONArray evaluationInfo = new JSONArray();
@@ -77,6 +82,7 @@ public class Teacher_EvaluationStatusService {
                 studentInfo.put("complete_student", String.valueOf(CompleteStudent));
                 studentInfo.put("total_student", String.valueOf(CountStudent(classId)));
                 studentInfo.put("chap_id", String.valueOf(chapId));
+                studentInfo.put("youtube_title", findYoutubeTitleByChapID(chapId));
             }
             studentInfo.put("class_id", classId);
             evaluationInfo.add(studentInfo);
