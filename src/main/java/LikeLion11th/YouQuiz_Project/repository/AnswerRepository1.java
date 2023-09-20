@@ -17,4 +17,10 @@ public interface AnswerRepository1 extends CrudRepository<AnswerEntity, Long> {
     )
     Optional<AnswerEntity> findByChapterEntityAndStudentEntity(@Param("chapterId") Long chapid, @Param("studentId") Long studentid);
 
+    @Query(
+            value = "select * from answer a where chapter_id = :chapterId AND student_id = :studentId"
+            , nativeQuery = true
+    )
+    public Optional<AnswerEntity> findByChapterEntityAndStudentEntity1(Long chapterId, Long studentId);
+
 }
