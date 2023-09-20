@@ -51,10 +51,10 @@ public class TeacherStudyController {
     public void createComment(
             @RequestBody CommentDto commentDto,
             @PathVariable("teacher_id") Long teacher_id,
-            @PathVariable("chapterId") Long chapterId,
-            @PathVariable("studentId") Long studentId
+            @PathVariable("chapterId") Long chapter_id,
+            @PathVariable("studentId") Long student_id
     ){
-        teacherStudyService.createComment(commentDto, teacher_id, chapterId, studentId);
+        teacherStudyService.createComment(commentDto, teacher_id, chapter_id, student_id);
     }
 
 }

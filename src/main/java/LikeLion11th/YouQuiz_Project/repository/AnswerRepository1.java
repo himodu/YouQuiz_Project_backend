@@ -6,6 +6,8 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface AnswerRepository1 extends CrudRepository<AnswerEntity, Long> {
 
@@ -14,5 +16,11 @@ public interface AnswerRepository1 extends CrudRepository<AnswerEntity, Long> {
             , nativeQuery = true
     )
     AnswerEntity findByChapterEntityAndStudentEntity(@Param("chapterId") Long chapid, @Param("studentId") Long studentid);
+
+    @Query(
+            value = "select * from answer a where chapter_id = :chapterId AND student_id = :studentId"
+            , nativeQuery = true
+    )
+    public Optional<AnswerEntity> findByChapterEntityAndStudentEntity1(Long chapterId, Long studentId);
 
 }
