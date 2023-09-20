@@ -136,7 +136,7 @@ public class TeacherStudyService {
         return infoDto;
     }
 
-    public void createComment(CommentDto commentDto, Long teacher_id, Long answer_id){
+    public void createComment(CommentDto commentDto, Long teacher_id, Long chapterId, Long studentId){
         CommentEntity commentEntity = new CommentEntity();
 
         Optional<TeacherEntity> teacherEntity = teacherRepository1.findById(Long.valueOf(teacher_id));
@@ -144,7 +144,7 @@ public class TeacherStudyService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
 
-        Optional<AnswerEntity> answerEntity = answerRepository1.findById(Long.valueOf(answer_id));
+        Optional<AnswerEntity> answerEntity = Optional.ofNullable(answerRepository1.findByChapterEntityAndStudentEntity(Long.valueOf(chapterId), Long.valueOf(studentId)));
         if(answerEntity.isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }

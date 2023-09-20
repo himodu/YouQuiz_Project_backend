@@ -47,13 +47,14 @@ public class TeacherStudyController {
     }
 
     // 교육자 학습 post
-    @PostMapping("{answer_id}/comment")
+    @PostMapping("{chapterId}/{studentId}/comment")
     public void createComment(
             @RequestBody CommentDto commentDto,
             @PathVariable("teacher_id") Long teacher_id,
-            @PathVariable("answer_id") Long answer_id
+            @PathVariable("chapterId") Long chapterId,
+            @PathVariable("studentId") Long studentId
     ){
-        teacherStudyService.createComment(commentDto, teacher_id, answer_id);
+        teacherStudyService.createComment(commentDto, teacher_id, chapterId, studentId);
     }
 
 }
