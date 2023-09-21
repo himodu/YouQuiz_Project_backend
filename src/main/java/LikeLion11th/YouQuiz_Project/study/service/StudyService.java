@@ -2,11 +2,13 @@ package LikeLion11th.YouQuiz_Project.study.service;
 
 import LikeLion11th.YouQuiz_Project.entity.AnswerEntity;
 import LikeLion11th.YouQuiz_Project.entity.ChapterEntity;
+import LikeLion11th.YouQuiz_Project.entity.CommentEntity;
 import LikeLion11th.YouQuiz_Project.entity.StudentEntity;
 import LikeLion11th.YouQuiz_Project.model.AnswerDto;
 import LikeLion11th.YouQuiz_Project.model.ChapterDto;
 import LikeLion11th.YouQuiz_Project.repository.AnswerRepository1;
 import LikeLion11th.YouQuiz_Project.repository.ChapterRepository1;
+import LikeLion11th.YouQuiz_Project.repository.CommentRepository1;
 import LikeLion11th.YouQuiz_Project.repository.StudentRepository1;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,12 +23,14 @@ public class StudyService {
     private final AnswerRepository1 answerRepository1;
     private final StudentRepository1 studentRepository1;
     private final ChapterRepository1 chapterRepository1;
+    private final CommentRepository1 commentRepository1;
 
 
-    public StudyService(@Autowired AnswerRepository1 answerRepository1, @Autowired StudentRepository1 studentRepository1, @Autowired ChapterRepository1 chapterRepository1) {
+    public StudyService(@Autowired AnswerRepository1 answerRepository1, @Autowired StudentRepository1 studentRepository1, @Autowired ChapterRepository1 chapterRepository1, @Autowired CommentRepository1 commentRepository1) {
         this.answerRepository1 = answerRepository1;
         this.studentRepository1 = studentRepository1;
         this.chapterRepository1 = chapterRepository1;
+        this.commentRepository1 = commentRepository1;
     }
 
     public void createAnswer(AnswerDto answerDto, int student_id, int chapter_id){
@@ -58,13 +62,19 @@ public class StudyService {
         answerEntity.setAnswer_sentence(answerDto.getAnswer_sentence());
         answerEntity.setChapterEntity(chapterEntity.get());
         answerEntity.setStudentEntity(studentEntity.get());
-        answerEntity.setCommentEntity(null);
+
+        Optional<CommentEntity> commentEntity = commentRepository1.findById(Long.valueOf(0));
+        if(commentEntity.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+
+        answerEntity.setCommentEntity(commentEntity.get());
 
         answerRepository1.save(answerEntity);
 
     }
 
-    public ChapterDto readChapter(int chap_id){
+    public ChapterDto readChapter(long chap_id){
 
         ChapterDto chapterDto = new ChapterDto();
 

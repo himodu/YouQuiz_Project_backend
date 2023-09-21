@@ -6,8 +6,13 @@ import LikeLion11th.YouQuiz_Project.repository.*;
 import LikeLion11th.YouQuiz_Project.study.service.StudyService;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class Student_StudyStatusService {
@@ -17,11 +22,12 @@ public class Student_StudyStatusService {
     private final AnswerRepository answerRepository;
     private final AnswerRepository1 answerRepository1;
     private final QuizRepository quizRepository;
-
+    private final CommentRepository commentRepository;
     private final StudyService studyService;
 
     public Student_StudyStatusService(Class_StudentRepository classStudentRepository, Class_ChapterRepository classChapterRepository,
-                                      ChapterRepository chapterRepository, AnswerRepository answerRepository, QuizRepository quizRepository, StudyService studyService,AnswerRepository1 answerRepository1) {
+                                      ChapterRepository chapterRepository, AnswerRepository answerRepository, QuizRepository quizRepository, StudyService studyService,
+                                      AnswerRepository1 answerRepository1, CommentRepository commentRepository) {
         this.classStudentRepository = classStudentRepository;
         this.classChapterRepository = classChapterRepository;
         this.chapterRepository = chapterRepository;
@@ -29,6 +35,7 @@ public class Student_StudyStatusService {
         this.quizRepository = quizRepository;
         this.studyService = studyService;
         this.answerRepository1 = answerRepository1;
+        this.commentRepository = commentRepository;
     }
 
     public List<Long> findClassIdByStuId(Long studentId) { // Find ClassID using StudentID
@@ -99,15 +106,36 @@ public class Student_StudyStatusService {
         return score;
     }
 
-    public JSONObject findStudyStatus(int studentId, int chapId) { // Find Learning Status of Each Chapter
+    public Long findTeacherCommentId(Long studentId, Long chapId) { // Find Teacher's CommentID using StudentID & ChapterID
+        Long TeacherCommentId = answerRepository.findTeacherCommentID(studentId, chapId);
+        if(TeacherCommentId==null){
+            return null;
+        }
+        return TeacherCommentId;
+    }
+
+    public String findTeacherComment(Long commentId) { // Find Teacher's Comment using CommentID
+        if(commentId==null){
+            return null;
+        }else{
+            String comment = commentRepository.findTeacherCommentByCommentID(commentId);
+            return comment;
+        }
+
+    }
+
+    public JSONObject findStudyStatus(Long studentId, Long chapId) { // Find Learning Status of Each Chapter
           JSONObject returnJSON = new JSONObject();
 
-          AnswerEntity answerEntity = answerRepository1.findByChapterEntityAndStudentEntity(Long.valueOf(chapId), Long.valueOf(studentId));
-          JSONArray answerList = new JSONArray();
+          Optional<AnswerEntity> answerEntity = answerRepository1.findByChapterEntityAndStudentEntity(chapId, studentId);
+          if(answerEntity.isEmpty()){
+              throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+          }
 
-          returnJSON.put("student_answer_list",answerEntity.getAnswersList());
-          returnJSON.put("answer_sentence", answerEntity.getAnswer_sentence());
-          returnJSON.put("score",  answerEntity.getScore());
+
+          returnJSON.put("student_answer_list",answerEntity.get().getAnswersList());
+          returnJSON.put("answer_sentence", answerEntity.get().getAnswer_sentence());
+          returnJSON.put("score",  answerEntity.get().getScore());
 
         ChapterDto chapterDto = studyService.readChapter(chapId);
 
@@ -115,6 +143,7 @@ public class Student_StudyStatusService {
         returnJSON.put("correct_answerList", chapterDto.getCorrect_answerList());
         returnJSON.put("youtube_link", chapterDto.getYoutube_link());
         returnJSON.put("quizEntityList", chapterDto.getQuizEntityList());
+        returnJSON.put("teacher_comment", findTeacherComment(findTeacherCommentId(studentId, chapId)));
 
         return returnJSON;
     }
