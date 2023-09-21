@@ -140,8 +140,7 @@ public class TeacherStudyService {
     }
 
     public void createComment(CommentDto commentDto, Long teacher_id, Long chapter_id, Long student_id){
-        CommentEntity commentEntity = new CommentEntity();
-
+        
         Optional<TeacherEntity> teacherEntity = teacherRepository1.findById(Long.valueOf(teacher_id));
         if(teacherEntity.isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
@@ -152,20 +151,9 @@ public class TeacherStudyService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
 
-        if(answerEntity.get().getCommentEntity().getId()!=0)
-        {
-           commentEntity =  answerEntity.get().getCommentEntity();
-           commentEntity.setComment(commentDto.getComment());
-           answerEntity.get().setCommentEntity(commentEntity);
-        }
-        else{
-            commentEntity.setId(commentDto.getId());
-            commentEntity.setComment(commentDto.getComment());
-            commentEntity.setAnswerEntity(answerEntity.get());
-            commentEntity.setTeacherEntity(teacherEntity.get());
-            answerEntity.get().setCommentEntity(commentEntity);
-        }
+        CommentEntity commentEntity = answerEntity.get().getCommentEntity();
+        commentEntity.setComment(commentDto.getComment());
+        commentEntity.setTeacherEntity(teacherEntity.get());
 
-        this.commentRepository1.save(commentEntity);
     }
 }

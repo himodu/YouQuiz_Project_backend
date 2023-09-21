@@ -36,7 +36,6 @@ public class StudyService {
     public void createAnswer(AnswerDto answerDto, int student_id, int chapter_id){
         AnswerEntity answerEntity = new AnswerEntity();
 
-
         Optional<ChapterEntity> chapterEntity = chapterRepository1.findById(Long.valueOf(chapter_id));
         if(chapterEntity.isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
@@ -62,14 +61,9 @@ public class StudyService {
         answerEntity.setAnswer_sentence(answerDto.getAnswer_sentence());
         answerEntity.setChapterEntity(chapterEntity.get());
         answerEntity.setStudentEntity(studentEntity.get());
-
-        Optional<CommentEntity> commentEntity = commentRepository1.findById(Long.valueOf(0));
-        if(commentEntity.isEmpty()){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
-
-        answerEntity.setCommentEntity(commentEntity.get());
-
+        CommentEntity commentEntity = new CommentEntity();
+        answerEntity.setCommentEntity(commentEntity);
+        commentRepository1.save(commentEntity);
         answerRepository1.save(answerEntity);
 
     }
