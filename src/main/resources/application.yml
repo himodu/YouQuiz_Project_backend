@@ -1,12 +1,10 @@
-server:
-  port: 8080
-
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/youquiz
     username: youquizbackend
     password: da7879!!!
+
   jpa:
     hibernate:
       ddl-auto: update
@@ -15,10 +13,3 @@ spring:
       hibernate:
         format_sql: false #true
         dialect: org.hibernate.dialect.MySQL8Dialect
-#logging:
-#  level:
-#    org:
-#      hibernate:
-#        type:
-#          descriptor:
-#            sql: trace
