@@ -48,7 +48,7 @@ public class Teacher_EvaluationStatusService {
         return commendId;
     }
 
-    public Long CountChapter(Long classId) { // Count the number of Chapter in Class using ClassID
+    public Long CountChapter(Long classId) { // Count the countumber of Chapter in Class using ClassID
         List<Long> chapterNumber = classChapterRepository.CountChapter(classId);
         return chapterNumber.get(0);
     }
@@ -70,22 +70,27 @@ public class Teacher_EvaluationStatusService {
         for (Long classId : classData) { //  Repeat as the times of the number of extracted ClassID
             List<Long> studentData = findStuIdByClassId(classId);
             List<Long> chapterData = findChapIdByClassId(classId);
-            JSONObject studentInfo = new JSONObject();
+            JSONArray stuData = new JSONArray();
             for (Long chapId : chapterData) { // Repeat as the times of the number of extracted ChapterID
+                JSONObject studentInfo = new JSONObject();
                 Integer CompleteStudent = 0;
                 Long userCommentNumber = 0L;
                 for (Long studentId : studentData) { //  Repeat as the times of the number of extracted studentID
                     userCommentNumber += (CountComment(studentId, chapId).isEmpty()) ? 0 : 1; // Add 1 to Student Comment Counter Variable (userCommentNumber) if Student's Answer exist.
                     CompleteStudent += (userCommentNumber == CountChapter(classId)) ? 1 : 0; // answer evaluation is finished if the number of Teacher's Comment equals the number of Chapter in Class
                 }
+                System.out.println("*************************************************");
+                System.out.println(chapId);
+                System.out.println("*************************************************");
+                studentInfo.put("class_id", classId);
                 studentInfo.put("youtube_link", findURLByChapID(chapId));
                 studentInfo.put("complete_student", String.valueOf(CompleteStudent));
                 studentInfo.put("total_student", String.valueOf(CountStudent(classId)));
                 studentInfo.put("chap_id", String.valueOf(chapId));
                 studentInfo.put("youtube_title", findYoutubeTitleByChapID(chapId));
+                stuData.add(studentInfo);
             }
-            studentInfo.put("class_id", classId);
-            evaluationInfo.add(studentInfo);
+            evaluationInfo.add(stuData);
         }
         resultJSON.put("evaluation_status", evaluationInfo);
         return resultJSON;
