@@ -3,6 +3,8 @@ package LikeLion11th.YouQuiz_Project.study.service;
 import LikeLion11th.YouQuiz_Project.entity.*;
 import LikeLion11th.YouQuiz_Project.model.*;
 import LikeLion11th.YouQuiz_Project.repository.*;
+
+import org.apache.commons.logging.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -150,12 +152,19 @@ public class TeacherStudyService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
 
-        commentEntity.setId(commentDto.getId());
-        commentEntity.setComment(commentDto.getComment());
-        commentEntity.setAnswerEntity(answerEntity.get());
-        commentEntity.setTeacherEntity(teacherEntity.get());
-
-        answerEntity.get().setCommentEntity(commentEntity);
+        if(answerEntity.get().getCommentEntity().getId()!=0)
+        {
+           commentEntity =  answerEntity.get().getCommentEntity();
+           commentEntity.setComment(commentDto.getComment());
+           answerEntity.get().setCommentEntity(commentEntity);
+        }
+        else{
+            commentEntity.setId(commentDto.getId());
+            commentEntity.setComment(commentDto.getComment());
+            commentEntity.setAnswerEntity(answerEntity.get());
+            commentEntity.setTeacherEntity(teacherEntity.get());
+            answerEntity.get().setCommentEntity(commentEntity);
+        }
 
         this.commentRepository1.save(commentEntity);
     }
