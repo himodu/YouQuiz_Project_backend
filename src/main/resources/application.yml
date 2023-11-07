@@ -4,13 +4,17 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/youquiz_schema
-    username: YouQuiz_user
-    password: 7879
+    url: jdbc:mysql://127.0.0.1:3306/youquiz
+    username: youquizbackend
+    password: da7879!!!
   jpa:
     hibernate:
       ddl-auto: update
-    show-sql: false
+    show-sql: false #true
     properties:
       hibernate:
+        format_sql: false #true
         dialect: org.hibernate.dialect.MySQL8Dialect
+
+
+
