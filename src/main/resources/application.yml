@@ -1,11 +1,10 @@
-server:
-  port: 8081
+
 
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://172.17.0.2:3306/youquiz
-    username: youquiz
+    url: jdbc:mysql://aws-free-data.cvkmnqgpbmdr.ap-northeast-2.rds.amazonaws.com:3306/youquiz
+    username: root
     password: da7879!!!
 
   jpa:
