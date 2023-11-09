@@ -11,7 +11,7 @@ import java.util.List;
 public interface QuizRepository extends CrudRepository<QuizEntity, Long> { // Find Question Sentence using ChapterID
 
     @Query(
-            value = "select question from QuizEntity q where q.chapterEntity.id = :chapId"
+            value = "select question from quiz q where q.chapter_id = :chapId"
             , nativeQuery = true
     )
     List<String> findQuestion(@Param("chapId") Long chapId);

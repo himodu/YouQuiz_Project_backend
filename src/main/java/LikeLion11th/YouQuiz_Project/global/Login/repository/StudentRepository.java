@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface StudentRepository extends CrudRepository<StudentEntity, Long> {
     Optional<StudentEntity> findByUserId(String userid);
     @Query(
-            value = "select s.username from StudentEntity s where s.id = :studentId"
+            value = "select s.username from student s where s.id = :studentId"
             , nativeQuery = true
     )
     List<String> findUserNameByStuId(Long studentId);

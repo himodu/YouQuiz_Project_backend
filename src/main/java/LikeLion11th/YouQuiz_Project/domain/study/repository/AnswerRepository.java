@@ -19,28 +19,28 @@ public interface AnswerRepository extends CrudRepository<AnswerEntity, Long> {
     Optional<AnswerEntity> findByChapterEntityAndStudentEntity(@Param("chapterId") Long chapid, @Param("studentId") Long studentid);
 
     @Query(
-            value = "select id from AnswerEntity a where a.studentEntity.id = :studentId AND a.chapterEntity.id = :chapId"
+            value = "select id from answer a where a.student_id = :studentId AND a.chapter_id = :chapId"
             , nativeQuery = true
     )
     List<Long> checkStudyStatus(@Param("studentId")Long studentId, @Param("chapId")Long chapId); // Check Status of Chapter Learning
     @Query(
-            value = "select answer_sentence from AnswerEntity a where a.studentEntity.id = :studentId AND a.chapterEntity.id = :chapId"
+            value = "select answer_sentence from answer a where a.student_id = :studentId AND a.chapter_id = :chapId"
             , nativeQuery = true
     )
     List<String> findAnswerSentence(@Param("studentId")Long studentId, @Param("chapId")Long chapId); // Find Student's Answer_Sentence using StudentID & ChapterID
 
     @Query(
-            value = "select id from AnswerEntity a where a.studentEntity.id = :studentId AND a.chapterEntity.id = :chapId"
+            value = "select id from answer a where a.student_id = :studentId AND a.chapter_id = :chapId"
             , nativeQuery = true
     )
     List<Integer> findStuAnswerList(@Param("studentId")Long studentId, @Param("chapId")Long chapId); // Find Student's Answer_List using StudentID & ChapterID
     @Query(
-            value = "select score from AnswerEntity a where a.studentEntity.id = :studentId AND a.chapterEntity.id = :chapId"
+            value = "select score from answer a where a.student_id = :studentId AND a.chapter_id = :chapId"
             , nativeQuery = true
     )
     List<Integer> findScore(@Param("studentId") Long studentId, @Param("chapId") Long chapId); // Find Student's Score using StudentID & ChapterID
     @Query(
-            value = "select a.commentEntity.id from AnswerEntity a where a.studentEntity.id = :studentId AND a.chapterEntity.id = :chapId"
+            value = "select a.commentEntity.id from answer a where a.student_id = :studentId AND a.chapter_id = :chapId"
             , nativeQuery = true
     )
     List<Long> CountComment(@Param("studentId") Long studentId,@Param("chapId") Long chapId); // Count the number Teacher's Comment using StudentID and ChapterID

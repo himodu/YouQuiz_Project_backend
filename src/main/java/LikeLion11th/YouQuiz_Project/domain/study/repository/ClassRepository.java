@@ -20,22 +20,22 @@ public interface ClassRepository extends CrudRepository<ClassEntity, Long> {
 
 
     @Query(
-            value = "select c.id from ClassEntity c where c.teacherEntity.id = :teacherId"
+            value = "select c.id from class c where c.teacherEntity.id = :teacherId"
             , nativeQuery = true
     )
     List<Long> findClassIdByTeacherId(@Param("teacherId") Long teacherId); // Find ClassId using TeacherID
     @Query(
-            value = "select c.grade from ClassEntity c where c.id = :classId"
+            value = "select c.grade from class c where c.id = :classId"
             , nativeQuery = true
     )
     List<Integer> findGradeByClassId(@Param("classId") Long classId); // Find Grade using ClassID
     @Query(
-            value = "select c.class_num from ClassEntity c where c.id = :classId"
+            value = "select c.class_num from class c where c.id = :classId"
             , nativeQuery = true
     )
     List<Integer> findClassByClassId(@Param("classId")Long classId); // Find Class_Num using ClassID
     @Query(
-            value = "select c.school_name from ClassEntity c where c.id = :classId"
+            value = "select c.school_name from class c where c.id = :classId"
             , nativeQuery = true
     )
     List<String> findSchoolNameByClassId(@Param("classId") Long classId); // Find SchoolName using ClassID
