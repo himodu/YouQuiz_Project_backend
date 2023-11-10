@@ -1,5 +1,6 @@
 package LikeLion11th.YouQuiz_Project.myPage_teacher.service;
 
+import LikeLion11th.YouQuiz_Project.entity.CommentEntity;
 import LikeLion11th.YouQuiz_Project.repository.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -43,9 +44,9 @@ public class Teacher_EvaluationStatusService {
         return studentNumber.get(0);
     }
 
-    public List<Long> CountComment(Long studentId, Long chapId) { // Count the number of Teacher's Comment using StudentID AND ChapterID
-        List<Long> commendId = answerRepository.CountComment(studentId, chapId);
-        return commendId;
+    public List<CommentEntity> CountComment(Long studentId, Long chapId) { // Count the number of Teacher's Comment using StudentID AND ChapterID
+        List<CommentEntity> comment = answerRepository.CountComment(studentId, chapId);
+        return comment;
     }
 
     public Long CountChapter(Long classId) { // Count the countumber of Chapter in Class using ClassID
@@ -75,8 +76,14 @@ public class Teacher_EvaluationStatusService {
                 JSONObject studentInfo = new JSONObject();
                 Integer CompleteStudent = 0;
                 Long userCommentNumber = 0L;
+
                 for (Long studentId : studentData) { //  Repeat as the times of the number of extracted studentID
-                    userCommentNumber += (CountComment(studentId, chapId).isEmpty()) ? 0 : 1; // Add 1 to Student Comment Counter Variable (userCommentNumber) if Student's Answer exist.
+                    List<CommentEntity> comments = answerRepository.CountComment(studentId, chapId);
+                    for(CommentEntity comment : comments){
+                        if(!comment.getComment().isBlank()){
+                            userCommentNumber += 1;
+                        }
+                    }
                 }
                 studentInfo.put("class_id", classId);
                 studentInfo.put("youtube_link", findURLByChapID(chapId));

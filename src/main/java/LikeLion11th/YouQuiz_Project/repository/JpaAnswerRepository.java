@@ -1,6 +1,7 @@
 package LikeLion11th.YouQuiz_Project.repository;
 
 import LikeLion11th.YouQuiz_Project.entity.AnswerEntity;
+import LikeLion11th.YouQuiz_Project.entity.CommentEntity;
 import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -62,8 +63,8 @@ public class JpaAnswerRepository implements AnswerRepository {
     }
 
     @Override
-    public List<Long> CountComment(Long studentId, Long chapId) { // Count the number Teacher's Comment using StudentID and ChapterID
-        List<Long> data = em.createQuery("select a.commentEntity.id from AnswerEntity a where a.studentEntity.id = :studentId AND a.chapterEntity.id = :chapId", Long.class)
+    public List<CommentEntity> CountComment(Long studentId, Long chapId) { // Count the number Teacher's Comment using StudentID and ChapterID
+        List<CommentEntity> data = em.createQuery("select a.commentEntity from AnswerEntity a where a.studentEntity.id = :studentId AND a.chapterEntity.id = :chapId", CommentEntity.class)
                 .setParameter("studentId", studentId)
                 .setParameter("chapId", chapId)
                 .getResultList();

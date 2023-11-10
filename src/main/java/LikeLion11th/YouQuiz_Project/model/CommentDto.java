@@ -6,6 +6,7 @@ import LikeLion11th.YouQuiz_Project.entity.TeacherEntity;
 public class CommentDto {
     private Long id;
     private String comment;
+    private Long studentId;
     private AnswerEntity answerEntity;
     private TeacherEntity teacherEntity;
 
@@ -25,20 +26,12 @@ public class CommentDto {
         this.comment = comment;
     }
 
-    public AnswerEntity getAnswerEntity() {
-        return answerEntity;
+    public Long getStudentId() {
+        return studentId;
     }
 
-    public void setAnswerEntity(AnswerEntity answerEntity) {
-        this.answerEntity = answerEntity;
-    }
-
-    public TeacherEntity getTeacherEntity() {
-        return teacherEntity;
-    }
-
-    public void setTeacherEntity(TeacherEntity teacherEntity) {
-        this.teacherEntity = teacherEntity;
+    public void setStudentId(Long studentId) {
+        this.studentId = studentId;
     }
 
     @Override
