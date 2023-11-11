@@ -61,6 +61,7 @@ public class StudyService {
         answerEntity.setChapterEntity(chapterEntity.get());
         answerEntity.setStudentEntity(studentEntity.get());
         CommentEntity commentEntity = new CommentEntity();
+        commentEntity.setComment("");
         answerEntity.setCommentEntity(commentEntity);
         commentRepository.save(commentEntity);
         answerRepository.save(answerEntity);

@@ -28,7 +28,7 @@ public class InfoDto {
     private List<AnswerSentenceDto> answer_sentence_list = new ArrayList<>();
 
     // CommentDto
-    private List<CommentEntity> commentEntityList;
+    private List<CommentListDto> commentLists;
 
     public InfoDto() {
     }
@@ -81,11 +81,11 @@ public class InfoDto {
         this.answer_sentence_list = answer_sentence_list;
     }
 
-    public List<CommentEntity> getCommentEntityList() {
-        return commentEntityList;
+    public List<CommentListDto> getCommentLists() {
+        return commentLists;
     }
 
-    public void setCommentEntityList(List<CommentEntity> commentEntityList) {
-        this.commentEntityList = commentEntityList;
+    public void setCommentLists(List<CommentListDto> commentLists) {
+        this.commentLists = commentLists;
     }
 }

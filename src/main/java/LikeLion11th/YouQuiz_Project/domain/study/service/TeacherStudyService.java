@@ -68,7 +68,7 @@ public class TeacherStudyService {
         InfoDto infoDto = new InfoDto();
         List<Class_StudentEntity> classStudentEntityList = new ArrayList<>();
         List<AnswerSentenceDto> answer_sentence_list = new ArrayList<>();
-        List<CommentEntity> commentEntityList = new ArrayList<>();
+        List<CommentListDto> commentListDtos = new ArrayList<>();
 
         Optional<ClassEntity> classEntity = classRepository.findById(Long.valueOf(class_id));
         if(classEntity.isEmpty()){
@@ -116,7 +116,8 @@ public class TeacherStudyService {
 
                     // 교육자 comment list에 추가
                     CommentEntity commentEntity = answer.getCommentEntity();
-                    commentEntityList.add(commentEntity);
+                    CommentListDto commentListDto = new CommentListDto(commentEntity.getComment(), commentEntity.getAnswerEntity().getStudentEntity().getId());
+                    commentListDtos.add(commentListDto);
                 }
             }
         }
@@ -130,7 +131,7 @@ public class TeacherStudyService {
         // 해당 선생님이 class의 학생들에게 작성한 comment list
         // 각 학생들이 작성한 answer_id 따라가면 CommentEntity가 있음
         // Comment
-        infoDto.setCommentEntityList(commentEntityList);
+        infoDto.setCommentLists(commentListDtos);
 
         return infoDto;
     }

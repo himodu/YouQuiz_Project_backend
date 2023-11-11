@@ -1,9 +1,12 @@
 package LikeLion11th.YouQuiz_Project.domain.myPage_teacher.service;
 
+import LikeLion11th.YouQuiz_Project.domain.study.entity.CommentEntity;
 import LikeLion11th.YouQuiz_Project.domain.study.repository.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.stereotype.Service;
+
+import javax.xml.stream.events.Comment;
 import java.util.List;
 
 @Service
@@ -43,9 +46,9 @@ public class Teacher_EvaluationStatusService {
         return studentNumber.get(0);
     }
 
-    public List<Long> CountComment(Long studentId, Long chapId) { // Count the number of Teacher's Comment using StudentID AND ChapterID
-        List<Long> commendId = answerRepository.CountComment(studentId, chapId);
-        return commendId;
+    public List<CommentEntity> CountComment(Long studentId, Long chapId) { // Count the number of Teacher's Comment using StudentID AND ChapterID
+        List<CommentEntity> comment = answerRepository.CountComment(studentId, chapId);
+        return comment;
     }
 
     public Long CountChapter(Long classId) { // Count the number of Chapter in Class using ClassID
@@ -57,6 +60,10 @@ public class Teacher_EvaluationStatusService {
         List<String> URL = chapterRepository.findURLByChapID(chapId);
         return URL.get(0);
     }
+    public String findYoutubeTitleByChapID(Long chapId) { // Find YoutubeTitle using ChapterID
+        List<String> title = chapterRepository.findYoutubeTitleByChapID(chapId);
+        return title.get(0);
+    }
 
     public JSONObject SearchEvaluationStatus (Long teacherId) { // Find Student's Evaluation Status using TeacherID
         JSONObject resultJSON = new JSONObject();
@@ -65,23 +72,32 @@ public class Teacher_EvaluationStatusService {
         for (Long classId : classData) { //  Repeat as the times of the number of extracted ClassID
             List<Long> studentData = findStuIdByClassId(classId);
             List<Long> chapterData = findChapIdByClassId(classId);
-            JSONObject studentInfo = new JSONObject();
+            JSONArray stuData = new JSONArray();
             for (Long chapId : chapterData) { // Repeat as the times of the number of extracted ChapterID
+                JSONObject studentInfo = new JSONObject();
                 Integer CompleteStudent = 0;
                 Long userCommentNumber = 0L;
+
                 for (Long studentId : studentData) { //  Repeat as the times of the number of extracted studentID
-                    userCommentNumber += (CountComment(studentId, chapId).isEmpty()) ? 0 : 1; // Add 1 to Student Comment Counter Variable (userCommentNumber) if Student's Answer exist.
-                    CompleteStudent += (userCommentNumber == CountChapter(classId)) ? 1 : 0; // answer evaluation is finished if the number of Teacher's Comment equals the number of Chapter in Class
+                    List<CommentEntity> comments = answerRepository.CountComment(studentId, chapId);
+                    for(CommentEntity comment : comments){
+                        if(!comment.getComment().isBlank()){
+                            userCommentNumber += 1;
+                        }
+                    }
                 }
+                studentInfo.put("class_id", classId);
                 studentInfo.put("youtube_link", findURLByChapID(chapId));
-                studentInfo.put("complete_student", String.valueOf(CompleteStudent));
+                studentInfo.put("complete_student", String.valueOf(userCommentNumber));
                 studentInfo.put("total_student", String.valueOf(CountStudent(classId)));
                 studentInfo.put("chap_id", String.valueOf(chapId));
+                studentInfo.put("youtube_title", findYoutubeTitleByChapID(chapId));
+                stuData.add(studentInfo);
             }
-            studentInfo.put("class_id", classId);
-            evaluationInfo.add(studentInfo);
+            evaluationInfo.add(stuData);
         }
         resultJSON.put("evaluation_status", evaluationInfo);
         return resultJSON;
     }
 }
+
