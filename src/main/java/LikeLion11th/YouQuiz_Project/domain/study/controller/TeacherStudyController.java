@@ -53,5 +53,4 @@ public class TeacherStudyController {
     ){
         teacherStudyService.createComment(commentDto, teacher_id, answer_id);
     }
-
 }

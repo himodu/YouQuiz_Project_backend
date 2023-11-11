@@ -137,7 +137,6 @@ public class TeacherStudyService {
     }
 
     public void createComment(CommentDto commentDto, Long teacher_id, Long answer_id){
-        CommentEntity commentEntity = new CommentEntity();
 
         Optional<TeacherEntity> teacherEntity = teacherRepository.findById(Long.valueOf(teacher_id));
         if(teacherEntity.isEmpty()){
@@ -148,10 +147,8 @@ public class TeacherStudyService {
         if(answerEntity.isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
-
-        commentEntity.setId(commentDto.getId());
+        CommentEntity commentEntity = answerEntity.get().getCommentEntity();
         commentEntity.setComment(commentDto.getComment());
-        commentEntity.setAnswerEntity(answerEntity.get());
         commentEntity.setTeacherEntity(teacherEntity.get());
 
         answerEntity.get().setCommentEntity(commentEntity);
