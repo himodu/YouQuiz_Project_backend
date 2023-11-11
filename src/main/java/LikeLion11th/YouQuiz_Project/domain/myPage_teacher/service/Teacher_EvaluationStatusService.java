@@ -4,10 +4,13 @@ import LikeLion11th.YouQuiz_Project.domain.study.entity.CommentEntity;
 import LikeLion11th.YouQuiz_Project.domain.study.repository.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.xml.stream.events.Comment;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class Teacher_EvaluationStatusService {
@@ -16,14 +19,16 @@ public class Teacher_EvaluationStatusService {
     private final Class_StudentRepository classStudentRepository;
     private final Class_ChapterRepository classChapterRepository;
     private final ChapterRepository chapterRepository;
+    private final CommentRepository commentRepository;
 
     private Teacher_EvaluationStatusService(ClassRepository classRepository, AnswerRepository answerRepository, Class_StudentRepository classStudentRepository,
-                                            Class_ChapterRepository classChapterRepository, ChapterRepository chapterRepository) {
+                                            Class_ChapterRepository classChapterRepository, ChapterRepository chapterRepository, CommentRepository commentRepository) {
         this.classRepository = classRepository;
         this.answerRepository = answerRepository;
         this.classStudentRepository = classStudentRepository;
         this.classChapterRepository = classChapterRepository;
         this.chapterRepository = chapterRepository;
+        this.commentRepository = commentRepository;
     }
 
     public List<Long> findClassIdByTeacherId(Long teacherId) { // Find ClassID using TeacherID
@@ -46,8 +51,8 @@ public class Teacher_EvaluationStatusService {
         return studentNumber.get(0);
     }
 
-    public List<CommentEntity> CountComment(Long studentId, Long chapId) { // Count the number of Teacher's Comment using StudentID AND ChapterID
-        List<CommentEntity> comment = answerRepository.CountComment(studentId, chapId);
+    public List<Long> CountComment(Long studentId, Long chapId) { // Count the number of Teacher's Comment using StudentID AND ChapterID
+        List<Long> comment = answerRepository.CountComment(studentId, chapId);
         return comment;
     }
 
@@ -79,9 +84,13 @@ public class Teacher_EvaluationStatusService {
                 Long userCommentNumber = 0L;
 
                 for (Long studentId : studentData) { //  Repeat as the times of the number of extracted studentID
-                    List<CommentEntity> comments = answerRepository.CountComment(studentId, chapId);
-                    for(CommentEntity comment : comments){
-                        if(!comment.getComment().isBlank()){
+                    List<Long> comments = CountComment(studentId, chapId);
+                    for(Long commentId : comments){
+                        Optional<CommentEntity> comment = commentRepository.findById(commentId);
+                        if(comment.isEmpty()){
+                            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+                        }
+                        if(!comment.get().getComment().isBlank()){
                             userCommentNumber += 1;
                         }
                     }

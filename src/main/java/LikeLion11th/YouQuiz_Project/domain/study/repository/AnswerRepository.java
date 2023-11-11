@@ -41,10 +41,10 @@ public interface AnswerRepository extends CrudRepository<AnswerEntity, Long> {
     )
     List<Integer> findScore(@Param("studentId") Long studentId, @Param("chapId") Long chapId); // Find Student's Score using StudentID & ChapterID
     @Query(
-            value = "select a.commentEntity from answer a where a.student_id = :studentId AND a.chapter_id = :chapId"
+            value = "select a.comment_entity_id from answer a where a.student_id = :studentId AND a.chapter_id = :chapId"
             , nativeQuery = true
     )
-    List<CommentEntity> CountComment(@Param("studentId") Long studentId, @Param("chapId") Long chapId); // Count the number Teacher's Comment using StudentID and ChapterID
+    List<Long> CountComment(@Param("studentId") Long studentId, @Param("chapId") Long chapId); // Count the number Teacher's Comment using StudentID and ChapterID
     @Query(
             value = "select comment_entity_id from answer where chapter_id = :chapId AND student_id = :studentId"
             , nativeQuery = true
