@@ -18,7 +18,7 @@ public interface Class_ChapterRepository extends CrudRepository<Class_ChapterEnt
     List<Long> findChapIdByClassId(@Param("classId") Long classId); // Find ChapterID using ClassID
 
     @Query(
-            value = "select count(c.chapter_id) from class_chapter c where c.classEntity.id = :classId"
+            value = "select count(c.chapter_id) from class_chapter c where c.class_id = :classId"
             , nativeQuery = true
     )
     List<Long> CountChapter(@Param("classId") Long classId); // Count the number of Chapter assigned Class using ClassID

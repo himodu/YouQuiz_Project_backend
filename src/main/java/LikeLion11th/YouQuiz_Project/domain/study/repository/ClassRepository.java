@@ -20,7 +20,7 @@ public interface ClassRepository extends CrudRepository<ClassEntity, Long> {
 
 
     @Query(
-            value = "select c.id from class c where c.teacherEntity.id = :teacherId"
+            value = "select c.id from class c where c.teacher_id = :teacherId"
             , nativeQuery = true
     )
     List<Long> findClassIdByTeacherId(@Param("teacherId") Long teacherId); // Find ClassId using TeacherID
